@@ -1,0 +1,6 @@
+# Build Directory
+DerivedData
+# User Data
+*.pbxuser
+xcuserdata
+

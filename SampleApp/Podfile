@@ -1,0 +1,4 @@
+use_frameworks!
+
+pod 'ConsistencyManager', :path => '..'
+
