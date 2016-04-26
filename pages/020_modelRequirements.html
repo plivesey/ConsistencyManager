@@ -1,0 +1,361 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Model Requirements &mdash; Consistency Manager 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Consistency Manager 1.0 documentation" href="../index.html"/>
+        <link rel="next" title="Listeners" href="030_listeners.html"/>
+        <link rel="prev" title="Consistency Manager" href="010_consistencyManager.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Consistency Manager
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="010_consistencyManager.html">Consistency Manager</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Model Requirements</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#consistencymanagermodel">ConsistencyManagerModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#equality">Equality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deletes">Deletes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#message-model">Message Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#contacts-model">Contacts Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#json">JSON</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="030_listeners.html">Listeners</a></li>
+<li class="toctree-l1"><a class="reference internal" href="040_dataFlow.html">Data Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="050_api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="060_otherFeatures.html">Other Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="070_collections.html">Collections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="080_memoryUsage.html">Memory Footprint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="090_otherOptions.html">Core Data/Other Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="100_threading.html">Threading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="110_errorsAndDebugging.html">Errors and Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="120_setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="130_testing.html">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="140_swift.html">Swift</a></li>
+<li class="toctree-l1"><a class="reference internal" href="150_immutability.html">A Case for Immutability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="160_FAQ.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="170_acknoledgements.html">Acknowledgements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="180_futurePlans.html">Future Plans</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Consistency Manager</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>Model Requirements</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="../_sources/pages/020_modelRequirements.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="model-requirements">
+<h1>Model Requirements<a class="headerlink" href="#model-requirements" title="Permalink to this headline">¶</a></h1>
+<p>In order for the consistency manager to traverse and edit models as trees, all models must conform to the ConsistencyManagerModel protocol. This protocol is usually relatively easy to implement. There are four methods you need to implement. For more information, see the documentation in the code.</p>
+<p>These models can be swift structs, swift classes, objective-c classes or really, any object. The models should be immutable and these models should be thread-safe. It should be easy to implement these methods in a thread safe manner since they models are immutable and these are all functional methods.</p>
+<div class="section" id="consistencymanagermodel">
+<h2>ConsistencyManagerModel<a class="headerlink" href="#consistencymanagermodel" title="Permalink to this headline">¶</a></h2>
+<p>This protocol must be implemented for every model used by the consistency manager. It defines three main features:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>The ability to identify models as representing the same data. This is done by returning a globally unique identifier. If this identifier is the same, it means it represents the same data. This also defines a &#8216;node&#8217; in the tree (see <a class="reference internal" href="010_consistencyManager.html"><em>Consistency Manager</em></a>).</li>
+<li>The ability to create new models by mapping on old models. The protocol allows the consistency manager to iterate over child nodes (and then recursively iterate over the whole tree) and then replace these models with updated models.</li>
+<li>Compare model for equality. The consistency manager needs to compare models to determine if models have actually changed. If a model hasn&#8217;t changed, the consistency manager can short circuit.</li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="equality">
+<h2>Equality<a class="headerlink" href="#equality" title="Permalink to this headline">¶</a></h2>
+<p>One important requirement for models is that models with the same id must be equal. You cannot have one model that has a child and another model with the same id which does not have this child. This will be considered an update to the consistency manager and one model will be updated.</p>
+</div>
+<div class="section" id="deletes">
+<h2>Deletes<a class="headerlink" href="#deletes" title="Permalink to this headline">¶</a></h2>
+<p>The consistency manager supports deleting models. When a model is deleted, the map function in the ConsistencyManagerProtocol will return nil for a model. This means the model should remove this child model. If the child model is required, we recommend you cascade this delete and return nil for the current model.</p>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p>These examples use an example of the models shown in <a class="reference internal" href="010_consistencyManager.html"><em>Consistency Manager</em></a>.</p>
+<div class="section" id="message-model">
+<h3>Message Model<a class="headerlink" href="#message-model" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-c"><div class="highlight"><pre><span class="k">struct</span> <span class="n">Message</span><span class="o">:</span> <span class="n">ConsistencyManagerModel</span><span class="p">,</span> <span class="n">Equatable</span> <span class="p">{</span>
+  <span class="n">let</span> <span class="n">id</span><span class="o">:</span> <span class="n">String</span>
+  <span class="n">let</span> <span class="n">text</span><span class="o">:</span> <span class="n">String</span>
+  <span class="n">let</span> <span class="n">author</span><span class="o">:</span> <span class="n">Person</span>
+  <span class="n">let</span> <span class="n">image</span><span class="o">:</span> <span class="n">Image</span><span class="o">?</span>
+
+  <span class="n">var</span> <span class="n">modelIdentifier</span><span class="o">:</span> <span class="n">String</span><span class="o">?</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="s">&quot;Message-\(id)&quot;</span>
+  <span class="p">}</span>
+
+  <span class="n">func</span> <span class="n">map</span><span class="p">(</span><span class="n">transform</span><span class="o">:</span> <span class="p">(</span><span class="n">ConsistencyManagerModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ConsistencyManagerModel</span><span class="o">?</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ConsistencyManagerModel</span><span class="o">?</span> <span class="p">{</span>
+    <span class="n">guard</span> <span class="n">let</span> <span class="n">author</span> <span class="o">=</span> <span class="n">transform</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">author</span><span class="p">)</span> <span class="n">as</span><span class="o">?</span> <span class="n">Person</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="c1">// required field, so we will cascade the delete if person is deleted</span>
+      <span class="k">return</span> <span class="n">nil</span>
+    <span class="p">}</span>
+    <span class="n">let</span> <span class="n">image</span> <span class="o">=</span> <span class="n">transform</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">image</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Message</span><span class="p">(</span><span class="n">id</span><span class="o">:</span> <span class="n">id</span><span class="p">,</span> <span class="n">text</span><span class="o">:</span> <span class="n">text</span><span class="p">,</span> <span class="n">author</span><span class="o">:</span> <span class="n">author</span><span class="p">,</span> <span class="n">image</span><span class="o">:</span> <span class="n">image</span><span class="p">)</span>
+  <span class="p">}</span>
+
+  <span class="n">func</span> <span class="n">forEach</span><span class="p">(</span><span class="n">visit</span><span class="o">:</span> <span class="p">(</span><span class="n">ConsistencyManagerModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">visit</span><span class="p">(</span><span class="n">author</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">let</span> <span class="n">image</span> <span class="o">=</span> <span class="n">image</span> <span class="p">{</span>
+      <span class="n">visit</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="o">==</span><span class="p">(</span><span class="n">lhs</span><span class="o">:</span> <span class="n">Message</span><span class="p">,</span> <span class="n">rhs</span><span class="o">:</span> <span class="n">Message</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">id</span> <span class="o">==</span> <span class="n">id</span> <span class="o">&amp;&amp;</span>
+    <span class="n">text</span> <span class="o">==</span> <span class="n">text</span> <span class="o">&amp;&amp;</span>
+    <span class="n">author</span> <span class="o">==</span> <span class="n">author</span> <span class="o">&amp;&amp;</span>
+    <span class="n">image</span> <span class="o">==</span> <span class="n">image</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="contacts-model">
+<h3>Contacts Model<a class="headerlink" href="#contacts-model" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-c"><div class="highlight"><pre><span class="k">struct</span> <span class="n">Contacts</span><span class="o">:</span> <span class="n">ConsistencyManagerModel</span><span class="p">,</span> <span class="n">Equatable</span> <span class="p">{</span>
+  <span class="n">let</span> <span class="n">id</span><span class="o">:</span> <span class="n">String</span>
+  <span class="n">let</span> <span class="n">contacts</span><span class="o">:</span> <span class="p">[</span><span class="n">Person</span><span class="p">]</span>
+
+  <span class="n">var</span> <span class="n">modelIdentifier</span><span class="o">:</span> <span class="n">String</span><span class="o">?</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="s">&quot;Contacts-\(id)&quot;</span>
+  <span class="p">}</span>
+
+  <span class="n">func</span> <span class="n">map</span><span class="p">(</span><span class="n">transform</span><span class="o">:</span> <span class="p">(</span><span class="n">ConsistencyManagerModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ConsistencyManagerModel</span><span class="o">?</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ConsistencyManagerModel</span><span class="o">?</span> <span class="p">{</span>
+    <span class="n">let</span> <span class="n">contacts</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">contacts</span><span class="p">.</span><span class="n">flatMap</span> <span class="p">{</span> <span class="n">model</span> <span class="n">in</span>
+      <span class="k">return</span> <span class="n">transform</span><span class="p">(</span><span class="n">model</span><span class="p">)</span> <span class="n">as</span><span class="o">?</span> <span class="n">Person</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">Contacts</span><span class="p">(</span><span class="n">id</span><span class="o">:</span> <span class="n">id</span><span class="p">,</span> <span class="n">contacts</span><span class="o">:</span> <span class="n">contacts</span><span class="p">)</span>
+  <span class="p">}</span>
+
+  <span class="n">func</span> <span class="n">forEach</span><span class="p">(</span><span class="n">visit</span><span class="o">:</span> <span class="p">(</span><span class="n">ConsistencyManagerModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">contacts</span><span class="p">.</span><span class="n">forEach</span><span class="p">(</span><span class="n">visit</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="o">==</span><span class="p">(</span><span class="n">lhs</span><span class="o">:</span> <span class="n">Contacts</span><span class="p">,</span> <span class="n">rhs</span><span class="o">:</span> <span class="n">Contacts</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">id</span> <span class="o">==</span> <span class="n">id</span> <span class="o">&amp;&amp;</span>
+    <span class="n">contacts</span> <span class="o">==</span> <span class="n">contacts</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The other models (Person and Image) have similar implementations which are hopefully clear given these examples.</p>
+</div>
+<div class="section" id="json">
+<h3>JSON<a class="headerlink" href="#json" title="Permalink to this headline">¶</a></h3>
+<p>You can use any networking protocol to represent your models. Here, we show how these models might be represented in JSON.</p>
+<div class="highlight-json"><div class="highlight"><pre>// Message model
+{
+  &quot;id&quot;: &quot;12&quot;,
+  &quot;text&quot;: &quot;Hey, how are you doing?&quot;,
+  &quot;author&quot;: {
+    &quot;id&quot;: &quot;42&quot;,
+    &quot;username&quot;: &quot;plivesey&quot;,
+    &quot;online&quot;: false
+  },
+  &quot;image&quot;: {
+    &quot;path&quot;: &quot;/static/images/img3.png&quot;,
+    &quot;width&quot;: 200
+  }
+}
+
+// Contacts model
+{
+  &quot;id&quot;: &quot;44&quot;,
+  &quot;contacts&quot;: [
+    {
+      &quot;id&quot;: &quot;42&quot;,
+      &quot;username&quot;: &quot;plivesey&quot;,
+      &quot;online&quot;: false
+    },
+    {
+      &quot;id&quot;: &quot;53&quot;,
+      &quot;username&quot;: &quot;ndonti&quot;,
+      &quot;online&quot;: true
+    }
+  ]
+}
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="030_listeners.html" class="btn btn-neutral float-right" title="Listeners" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="010_consistencyManager.html" class="btn btn-neutral" title="Consistency Manager" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, LinkedIn.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

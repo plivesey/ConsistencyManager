@@ -1,0 +1,233 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Errors and Debugging &mdash; Consistency Manager 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Consistency Manager 1.0 documentation" href="../index.html"/>
+        <link rel="next" title="Setup" href="120_setup.html"/>
+        <link rel="prev" title="Threading" href="100_threading.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Consistency Manager
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="010_consistencyManager.html">Consistency Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="020_modelRequirements.html">Model Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="030_listeners.html">Listeners</a></li>
+<li class="toctree-l1"><a class="reference internal" href="040_dataFlow.html">Data Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="050_api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="060_otherFeatures.html">Other Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="070_collections.html">Collections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="080_memoryUsage.html">Memory Footprint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="090_otherOptions.html">Core Data/Other Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="100_threading.html">Threading</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Errors and Debugging</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#errors">Errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#debugging">Debugging</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="120_setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="130_testing.html">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="140_swift.html">Swift</a></li>
+<li class="toctree-l1"><a class="reference internal" href="150_immutability.html">A Case for Immutability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="160_FAQ.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="170_acknoledgements.html">Acknowledgements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="180_futurePlans.html">Future Plans</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Consistency Manager</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>Errors and Debugging</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="../_sources/pages/110_errorsAndDebugging.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="errors-and-debugging">
+<h1>Errors and Debugging<a class="headerlink" href="#errors-and-debugging" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="errors">
+<h2>Errors<a class="headerlink" href="#errors" title="Permalink to this headline">¶</a></h2>
+<p>There aren&#8217;t many errors that can occur in the consistency manager, but a few are possible. They usually arise because of an error in one of the protocol methods you need to implement. Because they are the result of a coding error, there isn&#8217;t much you can do to handle errors on a case by case basis. Instead, the library provides a delegate method for you to catch errors and log them. Then, you can fix these errors in a future release.</p>
+<p>As an initial implementation, it&#8217;s recommended to implement the <tt class="docutils literal"><span class="pre">ConsistencyManagerDelegate</span></tt> method with <tt class="docutils literal"><span class="pre">assertionFailure</span></tt> so that in your debug builds, you will see problems early.</p>
+</div>
+<div class="section" id="debugging">
+<h2>Debugging<a class="headerlink" href="#debugging" title="Permalink to this headline">¶</a></h2>
+<p>Also in the <tt class="docutils literal"><span class="pre">ConsistencyManagerDelgate</span></tt> is a method that is called every time the consistency manager makes a change. This is useful when you&#8217;re seeing unexpected changes due to the consistency manager. If you place a break point here or print out the models, you can see why certain changes are being made.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="120_setup.html" class="btn btn-neutral float-right" title="Setup" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="100_threading.html" class="btn btn-neutral" title="Threading" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, LinkedIn.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

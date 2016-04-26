@@ -1,0 +1,267 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Consistency Manager &mdash; Consistency Manager 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Consistency Manager 1.0 documentation" href="../index.html"/>
+        <link rel="next" title="Model Requirements" href="020_modelRequirements.html"/>
+        <link rel="prev" title="Welcome to Consistency Manager’s documentation!" href="../index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Consistency Manager
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">Consistency Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#trees">Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#an-update">An Update</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#other-updates">Other Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deletes">Deletes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="020_modelRequirements.html">Model Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="030_listeners.html">Listeners</a></li>
+<li class="toctree-l1"><a class="reference internal" href="040_dataFlow.html">Data Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="050_api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="060_otherFeatures.html">Other Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="070_collections.html">Collections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="080_memoryUsage.html">Memory Footprint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="090_otherOptions.html">Core Data/Other Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="100_threading.html">Threading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="110_errorsAndDebugging.html">Errors and Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="120_setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="130_testing.html">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="140_swift.html">Swift</a></li>
+<li class="toctree-l1"><a class="reference internal" href="150_immutability.html">A Case for Immutability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="160_FAQ.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="170_acknoledgements.html">Acknowledgements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="180_futurePlans.html">Future Plans</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Consistency Manager</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>Consistency Manager</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="../_sources/pages/010_consistencyManager.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="consistency-manager">
+<h1>Consistency Manager<a class="headerlink" href="#consistency-manager" title="Permalink to this headline">¶</a></h1>
+<p>This page gives a detailed view of how you should use the consistency manager and how it works.</p>
+<div class="section" id="trees">
+<h2>Trees<a class="headerlink" href="#trees" title="Permalink to this headline">¶</a></h2>
+<p>Denormalized data models can be represented as trees. For instance, JSON is a tree. The root node is the root dictionary. Each new dictionary is a node and the edges are the keys in the dictionary or indexes in an array. Across an application, different models often have many subtrees in common. Whenever you update a node (or set of nodes), you want any model that has this node to update.</p>
+<p>Let&#8217;s say you are writing a messaging app and you have two models which, in tree form, look like this:</p>
+<img alt="../_images/treeOriginal.png" src="../_images/treeOriginal.png" />
+<p>In our application, we have two view controllers each with a reference to one of these models. Each has also registered with the consistency manager as listening to these models. Next, we&#8217;ll look at an update.</p>
+<p>For more information on how these models may look in code or encoded into JSON, see <a class="reference internal" href="020_modelRequirements.html"><em>Model Requirements</em></a>.</p>
+</div>
+<div class="section" id="an-update">
+<h2>An Update<a class="headerlink" href="#an-update" title="Permalink to this headline">¶</a></h2>
+<p>Now, let&#8217;s assume that through some source (network request, push notification, user action, etc.), we learn that a person with id=12 has come online. In code, you would create a new immutable person object with the online field set to true.</p>
+<img alt="../_images/nodeUpdate.png" src="../_images/nodeUpdate.png" />
+<p>Then, in a REST-like fashion, you can post this new object to the consistency manager.</p>
+<div class="highlight-c"><div class="highlight"><pre><span class="n">consistencyManager</span><span class="p">.</span><span class="n">updateWithNewModel</span><span class="p">(</span><span class="n">personModel</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The consistency manager will notice that two models are listening to changes on this person model so need to be updated. It will then create a new Message model and a new Contacts model (it must be a new model since the original model is immutable), and the consistency manager will call a delegate method on each listener with their new model. Each new tree will look like this:</p>
+<img alt="../_images/treeUpdate.png" src="../_images/treeUpdate.png" />
+<p>In code, this will look something like:</p>
+<div class="highlight-c"><div class="highlight"><pre><span class="n">func</span> <span class="nf">modelUpdated</span><span class="p">(</span><span class="n">model</span><span class="o">:</span> <span class="n">ConsistencyManagerModel</span><span class="o">?</span><span class="p">,</span> <span class="n">updates</span><span class="o">:</span> <span class="n">ModelUpdates</span><span class="p">,</span> <span class="n">context</span><span class="o">:</span> <span class="n">Any</span><span class="o">?</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="n">let</span> <span class="n">model</span> <span class="o">=</span> <span class="n">model</span> <span class="n">as</span><span class="o">?</span> <span class="n">MessageModel</span> <span class="p">{</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">model</span>
+    <span class="n">tableView</span><span class="p">.</span><span class="n">reloadData</span><span class="p">()</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Notice how this vastly simplifies the code for listeners. The listening model doesn&#8217;t need to KVO on all the properties on its model, or listen to a bunch of custom notifications. All it needs to do is reset its model and call reload data. The listener will automatically be listening to new changes on its new model.</p>
+<p>Also provided in this callback is an updates model describing what&#8217;s changed and a context. You can read more about these parameters in <a class="reference internal" href="060_otherFeatures.html"><em>Other Features</em></a>.</p>
+</div>
+<div class="section" id="other-updates">
+<h2>Other Updates<a class="headerlink" href="#other-updates" title="Permalink to this headline">¶</a></h2>
+<p>There are other ways in which updates can happen to models. For instance, let&#8217;s say that later in the application, the user navigates to the contacts page and pulls to refresh. This will return a new Contacts model which we&#8217;ll now post to the consistency manager (it&#8217;s recommended to post all new network models to the consistency manager).</p>
+<p>In this response, let&#8217;s say that the user has gone back offline. Though the message view controller is not listening to the contact model, the consistency manager does notice that it is listening to the same person model. It will follow exactly the same flow as above and update the message view controller with a new Message model.</p>
+<p>There are a few cases which can cause consistency updates, but in general, any common subtrees are guaranteed to be kept consistent.</p>
+</div>
+<div class="section" id="deletes">
+<h2>Deletes<a class="headerlink" href="#deletes" title="Permalink to this headline">¶</a></h2>
+<p>The consistency manager also supports deleting a model. This will cause it to be deleted from any model referencing this and replaced with nil (or removed from an array). Some models may have required fields (non-optional instance variables in swift). If you delete a required model, the behavior is up to you (in the implementation of the ConsistencyManagerModel protocol). However, we recommend that you cascade the delete and also delete its parent. This will cascade deletes.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="020_modelRequirements.html" class="btn btn-neutral float-right" title="Model Requirements" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../index.html" class="btn btn-neutral" title="Welcome to Consistency Manager’s documentation!" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, LinkedIn.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

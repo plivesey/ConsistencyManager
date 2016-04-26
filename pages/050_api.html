@@ -1,0 +1,242 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>API &mdash; Consistency Manager 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Consistency Manager 1.0 documentation" href="../index.html"/>
+        <link rel="next" title="Other Features" href="060_otherFeatures.html"/>
+        <link rel="prev" title="Data Flow" href="040_dataFlow.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Consistency Manager
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="010_consistencyManager.html">Consistency Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="020_modelRequirements.html">Model Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="030_listeners.html">Listeners</a></li>
+<li class="toctree-l1"><a class="reference internal" href="040_dataFlow.html">Data Flow</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#listening">Listening</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#updating-models">Updating Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deleting-models">Deleting Models</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="060_otherFeatures.html">Other Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="070_collections.html">Collections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="080_memoryUsage.html">Memory Footprint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="090_otherOptions.html">Core Data/Other Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="100_threading.html">Threading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="110_errorsAndDebugging.html">Errors and Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="120_setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="130_testing.html">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="140_swift.html">Swift</a></li>
+<li class="toctree-l1"><a class="reference internal" href="150_immutability.html">A Case for Immutability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="160_FAQ.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="170_acknoledgements.html">Acknowledgements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="180_futurePlans.html">Future Plans</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Consistency Manager</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>API</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="../_sources/pages/050_api.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="api">
+<h1>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h1>
+<p>This page shows a high level overview of the API. For more details, see the documentation in the code.</p>
+<div class="section" id="listening">
+<h2>Listening<a class="headerlink" href="#listening" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">public</span> <span class="pre">func</span> <span class="pre">listenForUpdates(listener:</span> <span class="pre">ConsistencyManagerListener)</span></tt></p>
+<p>Adds an object as a listener to the consistency manager. Note: you don&#8217;t need to pass in a model to listen to; the manager will call your delegate method to get the current model.</p>
+<p>You do not need to worry about removing listeners as the library does not maintain strong references to listeners.</p>
+</div>
+<div class="section" id="updating-models">
+<h2>Updating Models<a class="headerlink" href="#updating-models" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">public</span> <span class="pre">func</span> <span class="pre">updateWithNewModel(model:</span> <span class="pre">ConsistencyManagerModel,</span> <span class="pre">context:</span> <span class="pre">Any?</span> <span class="pre">=</span> <span class="pre">nil)</span></tt></p>
+<p>Provides a REST-like interface for updating models. Simply pass in an updated model, and all the listeners will automatically be updated. You can also optionally pass in a context here which will then be passed back to listeners that were affected by this change. See :doc:<tt class="docutils literal"><span class="pre">060_otherFeatures</span></tt> for more information.</p>
+</div>
+<div class="section" id="deleting-models">
+<h2>Deleting Models<a class="headerlink" href="#deleting-models" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">public</span> <span class="pre">func</span> <span class="pre">deleteModel(model:</span> <span class="pre">ConsistencyManagerModel,</span> <span class="pre">context:</span> <span class="pre">Any?</span> <span class="pre">=</span> <span class="pre">nil)</span></tt></p>
+<p>Deletes a model from any tree which is listening to it. Like <tt class="docutils literal"><span class="pre">updateWithNewModel</span></tt>, you can pass in a context here which will be passed back to any listener affected by this change.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="060_otherFeatures.html" class="btn btn-neutral float-right" title="Other Features" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="040_dataFlow.html" class="btn btn-neutral" title="Data Flow" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, LinkedIn.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
