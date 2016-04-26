@@ -17,7 +17,7 @@ Updating Models
 
 ``public func updateWithNewModel(model: ConsistencyManagerModel, context: Any? = nil)``
 
-Provides a REST-like interface for updating models. Simply pass in an updated model, and all the listeners will automatically be updated. You can also optionally pass in a context here which will then be passed back to listeners that were affected by this change. See :doc:``060_otherFeatures`` for more information.
+Provides a REST-like interface for updating models. Simply pass in an updated model, and all the listeners will automatically be updated. You can also optionally pass in a context here which will then be passed back to listeners that were affected by this change. See :doc:`060_otherFeatures` for more information.
 
 Deleting Models
 ---------------

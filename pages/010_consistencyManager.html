@@ -188,7 +188,7 @@
 <h2>Other Updates<a class="headerlink" href="#other-updates" title="Permalink to this headline">¶</a></h2>
 <p>There are other ways in which updates can happen to models. For instance, let&#8217;s say that later in the application, the user navigates to the contacts page and pulls to refresh. This will return a new Contacts model which we&#8217;ll now post to the consistency manager (it&#8217;s recommended to post all new network models to the consistency manager).</p>
 <p>In this response, let&#8217;s say that the user has gone back offline. Though the message view controller is not listening to the contact model, the consistency manager does notice that it is listening to the same person model. It will follow exactly the same flow as above and update the message view controller with a new Message model.</p>
-<p>There are a few cases which can cause consistency updates, but in general, any common subtrees are guaranteed to be kept consistent.</p>
+<p>There are a few cases which can cause consistency updates, but regardless of the method, any common subtrees are guaranteed to be kept consistent.</p>
 </div>
 <div class="section" id="deletes">
 <h2>Deletes<a class="headerlink" href="#deletes" title="Permalink to this headline">¶</a></h2>
@@ -215,7 +215,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014, LinkedIn.
+        &copy; Copyright 2016, LinkedIn.
 
     </p>
   </div>

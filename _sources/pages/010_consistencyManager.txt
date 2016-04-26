@@ -55,7 +55,7 @@ There are other ways in which updates can happen to models. For instance, let's 
 
 In this response, let's say that the user has gone back offline. Though the message view controller is not listening to the contact model, the consistency manager does notice that it is listening to the same person model. It will follow exactly the same flow as above and update the message view controller with a new Message model.
 
-There are a few cases which can cause consistency updates, but in general, any common subtrees are guaranteed to be kept consistent.
+There are a few cases which can cause consistency updates, but regardless of the method, any common subtrees are guaranteed to be kept consistent.
 
 Deletes
 -------

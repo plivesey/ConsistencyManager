@@ -3,7 +3,7 @@ Model Requirements
 
 In order for the consistency manager to traverse and edit models as trees, all models must conform to the ConsistencyManagerModel protocol. This protocol is usually relatively easy to implement. There are four methods you need to implement. For more information, see the documentation in the code.
 
-These models can be swift structs, swift classes, objective-c classes or really, any object. The models should be immutable and these models should be thread-safe. It should be easy to implement these methods in a thread safe manner since they models are immutable and these are all functional methods.
+These models can be swift structs, swift classes, objective-c classes or really, any object. The models should be immutable and these models should be thread-safe. It should be easy to implement these methods in a thread safe manner since the models are immutable and these are all functional methods.
 
 ConsistencyManagerModel
 -----------------------
