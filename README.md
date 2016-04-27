@@ -16,7 +16,7 @@ Immutable models have many advantages including thread-safety, performance, and 
 
 Immutable models can be visualized as trees. Each model has fields representing data (strings, ints, etc.) and pointers to other immutable models. Each model also may have an id to uniquely identify themselves. For instance, a messaging application could have these two models:
 
-<div align="center"><img src="https://raw.githubusercontent.com/linkedin/ConsistencyManager-iOS/master/docs/images/treeOriginal.png" height="400px" /></div>
+<div align="center"><img src="https://raw.githubusercontent.com/linkedin/ConsistencyManager-iOS/master/docs/images/treeOriginal.png" height="320px" /></div>
 
 In the application, two view controllers would register with the Consistency Manager that they are listening on these models.
 
@@ -37,7 +37,7 @@ ConsistencyManager.sharedInstance.updateWithNewModel(personModel)
 
 The Consistency Manager finds that two models, Message and Contacts, need updating and creates new copies of these models with the updated Person model:
 
-<div align="center"><img src="https://raw.githubusercontent.com/linkedin/ConsistencyManager-iOS/master/docs/images/treeUpdate.png" height="400px" /></div>
+<div align="center"><img src="https://raw.githubusercontent.com/linkedin/ConsistencyManager-iOS/master/docs/images/treeUpdate.png" height="320px" /></div>
 
 The Consistency Manager then delivers the updated models to the subscribed listeners (view controllers in this case) via delegate callbacks. The view controller simply needs to set the new data and refresh its view.
 
