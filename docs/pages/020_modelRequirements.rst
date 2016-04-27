@@ -27,7 +27,7 @@ The consistency manager supports deleting models. When a model is deleted, the m
 Examples
 --------
 
-These examples use an example of the models shown in :doc:`010_consistencyManager`.
+These examples are based on the trees shown in :doc:`010_consistencyManager`.
 
 =============
 Message Model
