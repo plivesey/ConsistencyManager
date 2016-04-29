@@ -63,10 +63,10 @@ Message Model
   }
 
   func ==(lhs: Message, rhs: Message) -> Bool {
-    return id == id &&
-      text == text &&
-      author == author &&
-      image == image
+    return lhs.id == rhs.id &&
+      lhs.text == rhs.text &&
+      lhs.author == rhs.author &&
+      lhs.image == rhs.image
   }
 
 ==============
@@ -96,8 +96,8 @@ Contacts Model
   }
 
   func ==(lhs: Contacts, rhs: Contacts) -> Bool {
-    return id == id &&
-      contacts == contacts
+    return lhs.id == rhs.id &&
+      lhs.contacts == rhs.contacts
   }
 
 The other models (Person and Image) have similar implementations which are hopefully clear given these examples.

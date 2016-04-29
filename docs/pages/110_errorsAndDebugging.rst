@@ -11,4 +11,4 @@ As an initial implementation, it's recommended to implement the ``ConsistencyMan
 Debugging
 ---------
 
-Also in the ``ConsistencyManagerDelgate`` is a method that is called every time the consistency manager makes a change. This is useful when you're seeing unexpected changes due to the consistency manager. If you place a break point here or print out the models, you can see why certain changes are being made.
+Also in the ``ConsistencyManagerDelegate`` is a method that is called every time the consistency manager makes a change. This is useful when you're seeing unexpected changes due to the consistency manager. If you place a break point here or print out the models, you can see why certain changes are being made.
