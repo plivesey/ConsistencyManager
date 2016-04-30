@@ -4,7 +4,7 @@ This library provides a way of keeping immutable models consistent. First, liste
 
 ## Installation
 
-```
+```ruby
 pod 'ConsistencyManager'
 ```
 
@@ -20,7 +20,7 @@ Immutable models can be visualized as trees. Each model has fields representing 
 
 In the application, two view controllers would register with the Consistency Manager that they are listening on these models.
 
-```
+```swift
 // In each UIViewController
 ConsistencyManager.sharedInstance.listenForUpdates(self)
 ```
@@ -31,7 +31,7 @@ Later in the application, some source, like a network request, push notification
 
 Then, the application would update this model in the consistency manager.
 
-```
+```swift
 ConsistencyManager.sharedInstance.updateWithNewModel(personModel)
 ```
 
