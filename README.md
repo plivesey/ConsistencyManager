@@ -7,6 +7,7 @@ This library provides a way of keeping immutable models consistent. First, liste
 If you are interested in this project, you may want to consider using Rocket Data which provides a higher level API for the Consistency Manager. It implements caching, collection support, and conflict resolution. It's the recommended way for consuming the Consistency Manager.
 
 GitHub: https://github.com/linkedin/RocketData
+
 Documentation: https://linkedin.github.io/RocketData
 
 ## Installation
