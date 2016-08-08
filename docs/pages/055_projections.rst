@@ -1,7 +1,7 @@
 Projections
 ===========
 
-The Consistency Manager supports projections for models. This allows using the same ``modelIdentifier`` for multiple different classes. For instance, let's say you have two projections on the same base type - ``PersonModel`` and ``FullProfileModel``. Both models represent the same data (and share fields) so we want to use the same ID for both. However, this doesn't come for free. In general, it's not advised to use projections if you can avoid it and instead use composition (see the Alternatives section of this page).
+The Consistency Manager supports projections for models. This allows using the same ``modelIdentifier`` for instances of different classes. For instance, let's say you have two projections of the same base type - ``PersonModel`` and ``FullProfileModel``. Both models represent the same data (and share fields) so we want to use the same ID for both. However, this doesn't come for free. In general, it's not advised to use projections if you can avoid it and instead use composition (see the Alternatives section of this page).
 
 Let's say that our models look something like this:
 

@@ -9,4 +9,4 @@ The best way to debug this is to set a breakpoint in the `ConsistencyManagerDele
 If my models don't use projections, don't I need to return more data than I need?
 ---------------------------------------------------------------------------------
 
-Possibly, but there are ways of modeling in ways which reduces total size and duplicated data. You can use composition to reduce the additional data. See the Alternatives section of :doc:`055_projections` for more information.
+Possibly, but there are ways of modeling in which total size and duplicated data are reduced. You can use composition to reduce the additional data. See the Alternatives section of :doc:`055_projections` for more information.
