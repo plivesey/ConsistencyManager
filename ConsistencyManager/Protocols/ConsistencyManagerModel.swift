@@ -14,6 +14,7 @@ IMPORTANT: These methods should be thread safe. Since they are all read operatio
 
 Example Implementation:
 
+```
 class Person: ConsistencyManagerModel {
     let id: String
     let name: String
@@ -88,6 +89,7 @@ class Location: ConsistencyManagerModel {
         return true
     }
 }
+```
 
 For other examples, see the documentation on Github.
 
