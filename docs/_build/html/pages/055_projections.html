@@ -1,0 +1,296 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Projections &mdash; Consistency Manager 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Consistency Manager 1.0 documentation" href="../index.html"/>
+        <link rel="next" title="Other Features" href="060_otherFeatures.html"/>
+        <link rel="prev" title="API" href="050_api.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Consistency Manager
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="010_consistencyManager.html">Consistency Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="020_modelRequirements.html">Model Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="030_listeners.html">Listeners</a></li>
+<li class="toctree-l1"><a class="reference internal" href="040_dataFlow.html">Data Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="050_api.html">API</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Projections</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#implementation-difficulties">Implementation Difficulties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#alternatives">Alternatives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#additional-features">Additional features</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="060_otherFeatures.html">Other Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="070_collections.html">Collections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="080_memoryUsage.html">Memory Footprint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="090_otherOptions.html">Core Data/Other Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="100_threading.html">Threading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="110_errorsAndDebugging.html">Errors and Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="120_setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="130_testing.html">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="140_swift.html">Swift</a></li>
+<li class="toctree-l1"><a class="reference internal" href="150_immutability.html">A Case for Immutability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="160_FAQ.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="170_acknoledgements.html">Acknowledgements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="180_futurePlans.html">Future Plans</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Consistency Manager</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>Projections</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="../_sources/pages/055_projections.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="projections">
+<h1>Projections<a class="headerlink" href="#projections" title="Permalink to this headline">¶</a></h1>
+<p>The Consistency Manager supports projections for models. This allows using the same <tt class="docutils literal"><span class="pre">modelIdentifier</span></tt> for instances of different classes. For instance, let&#8217;s say you have two projections of the same base type - <tt class="docutils literal"><span class="pre">PersonModel</span></tt> and <tt class="docutils literal"><span class="pre">FullProfileModel</span></tt>. Both models represent the same data (and share fields) so we want to use the same ID for both. However, this doesn&#8217;t come for free. In general, it&#8217;s not advised to use projections if you can avoid it and instead use composition (see the Alternatives section of this page).</p>
+<p>Let&#8217;s say that our models look something like this:</p>
+<div class="highlight-c"><div class="highlight"><pre><span class="k">struct</span> <span class="n">PersonModel</span> <span class="p">{</span>
+        <span class="n">let</span> <span class="n">id</span><span class="o">:</span> <span class="n">String</span>
+        <span class="n">let</span> <span class="n">name</span><span class="o">:</span> <span class="n">String</span>
+        <span class="n">let</span> <span class="n">pictureURL</span><span class="o">:</span> <span class="n">String</span>
+<span class="p">}</span>
+
+<span class="k">struct</span> <span class="n">FullProfileModel</span> <span class="p">{</span>
+        <span class="n">let</span> <span class="n">id</span><span class="o">:</span> <span class="n">String</span>
+        <span class="n">let</span> <span class="n">name</span><span class="o">:</span> <span class="n">String</span>
+        <span class="n">let</span> <span class="n">pictureURL</span><span class="o">:</span> <span class="n">String</span>
+        <span class="n">let</span> <span class="n">age</span><span class="o">:</span> <span class="n">Int</span>
+        <span class="n">let</span> <span class="n">username</span><span class="o">:</span> <span class="n">String</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If we want these models to sometimes have the same ID, we need to implement an additional method (<tt class="docutils literal"><span class="pre">mergeModel(model:</span> <span class="pre">ConsistencyManagerModel)</span></tt>) which merges one model into the other. For instance, for <tt class="docutils literal"><span class="pre">PersonModel</span></tt>, this would be:</p>
+<div class="highlight-c"><div class="highlight"><pre><span class="n">extension</span> <span class="n">PersonModel</span> <span class="p">{</span>
+        <span class="n">func</span> <span class="n">mergeModel</span><span class="p">(</span><span class="n">model</span><span class="o">:</span> <span class="n">ConsistencyManagerModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ConsistencyManagerModel</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="n">let</span> <span class="n">model</span> <span class="o">=</span> <span class="n">model</span> <span class="n">as</span><span class="o">?</span> <span class="n">PersonModel</span> <span class="p">{</span>
+                        <span class="c1">// If the class is the same, we can just return the other model (that&#39;s the model with the fresh data)</span>
+                        <span class="k">return</span> <span class="n">model</span>
+                <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="n">let</span> <span class="n">model</span> <span class="o">=</span> <span class="n">model</span> <span class="n">as</span><span class="o">?</span> <span class="n">FullProfileModel</span> <span class="p">{</span>
+                        <span class="c1">// Return a new PersonModel with all the updated fields from the new model</span>
+                        <span class="k">return</span> <span class="n">PersonModel</span><span class="p">(</span><span class="n">id</span><span class="o">:</span> <span class="n">id</span><span class="p">,</span> <span class="n">name</span><span class="o">:</span> <span class="n">model</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="n">pictureURL</span><span class="o">:</span> <span class="n">model</span><span class="p">.</span><span class="n">pictureURL</span><span class="p">)</span>
+                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                        <span class="n">assertionFailure</span><span class="p">(</span><span class="s">&quot;We cannot merge models of this type&quot;</span><span class="p">)</span>
+                        <span class="c1">// Best we can do is not apply any updates</span>
+                        <span class="k">return</span> <span class="n">self</span>
+                <span class="p">}</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This method should always return the same class as <tt class="docutils literal"><span class="pre">Self</span></tt>. It should take all the new data from the new model and merge it with all the current data.</p>
+<div class="section" id="implementation-difficulties">
+<h2>Implementation Difficulties<a class="headerlink" href="#implementation-difficulties" title="Permalink to this headline">¶</a></h2>
+<p>There are a couple of things which makes implementing this method tricky.</p>
+<p>First, it needs to be recursive. It not only needs to merge the current model, but merge all of the submodels too. This can&#8217;t be done automatically, but it&#8217;s not always clear how to merge subtrees.</p>
+<p>Second, merging arrays of different classes is difficult. If the array has new members, it may not be possible to create members of a class if it&#8217;s missing required fields. For this reason, it&#8217;s recommended not to use different projections in arrays.</p>
+<p>In general, it&#8217;s advised to use this feature sparingly if at all and to ensure that you know what you&#8217;re doing.</p>
+</div>
+<div class="section" id="alternatives">
+<h2>Alternatives<a class="headerlink" href="#alternatives" title="Permalink to this headline">¶</a></h2>
+<p>Instead of using projections, you can use composition. Larger models can contain smaller models. This means whenever a smaller model updates, the larger model will receive this update. For instance, for the models above, we could rewrite them as:</p>
+<div class="highlight-c"><div class="highlight"><pre><span class="k">struct</span> <span class="n">PersonModel</span> <span class="p">{</span>
+        <span class="n">let</span> <span class="n">id</span><span class="o">:</span> <span class="n">String</span>
+        <span class="n">let</span> <span class="n">name</span><span class="o">:</span> <span class="n">String</span>
+        <span class="n">let</span> <span class="n">pictureURL</span><span class="o">:</span> <span class="n">String</span>
+
+        <span class="n">var</span> <span class="n">modelIdentifier</span><span class="o">:</span> <span class="n">String</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;PersonModel:\(id)&quot;</span> <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">struct</span> <span class="n">FullProfileModel</span> <span class="p">{</span>
+        <span class="n">let</span> <span class="n">id</span><span class="o">:</span> <span class="n">String</span>
+        <span class="n">let</span> <span class="n">person</span><span class="o">:</span> <span class="n">PersonModel</span>
+        <span class="n">let</span> <span class="n">age</span><span class="o">:</span> <span class="n">Int</span>
+        <span class="n">let</span> <span class="n">username</span><span class="o">:</span> <span class="n">String</span>
+
+        <span class="n">var</span> <span class="n">modelIdentifier</span><span class="o">:</span> <span class="n">String</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;FullProfileModel:\(id)&quot;</span> <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Here, each model defines a different ID and one model contains the other. This is a much simpler way to write your models while achieving consistency as well as the ability to choose large or small models for each use case.</p>
+</div>
+<div class="section" id="additional-features">
+<h2>Additional features<a class="headerlink" href="#additional-features" title="Permalink to this headline">¶</a></h2>
+<p>The Consistency Manager also allows models to use the same class for different projections. This is useful if you want to define a model with multiple optional fields and not always set them all. This is rare, and again, use with caution as it can be hard to tell if a field has been deleted or has not yet been set. See <tt class="docutils literal"><span class="pre">ConsistencyManagerModel.swift</span></tt> for more information.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="060_otherFeatures.html" class="btn btn-neutral float-right" title="Other Features" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="050_api.html" class="btn btn-neutral" title="API" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, LinkedIn.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

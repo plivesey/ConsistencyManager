@@ -4,3 +4,6 @@ DerivedData
 *.pbxuser
 xcuserdata
 
+# Docs
+docs/sphinx_rtd_theme
+
