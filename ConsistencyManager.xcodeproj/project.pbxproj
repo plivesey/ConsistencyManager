@@ -524,6 +524,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
 			};
 			name = Debug;
@@ -546,6 +547,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos9.3;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
 				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
 			};
@@ -564,6 +566,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "LinkedIn.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				SUPPORTED_PLATFORMS = "macosx iphonesimulator iphoneos";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ConsistencyManagerDemo.app/ConsistencyManagerDemo";
 				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
@@ -579,6 +582,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "LinkedIn.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				SUPPORTED_PLATFORMS = "macosx iphonesimulator iphoneos";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ConsistencyManagerDemo.app/ConsistencyManagerDemo";
 				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
