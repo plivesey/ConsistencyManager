@@ -7,7 +7,11 @@ Pod::Spec.new do |spec|
   spec.summary          = 'Manages the consistency of immutable models.' 
   spec.source           = { :git => 'https://github.com/linkedin/ConsistencyManager-iOS.git', :tag => spec.version }
   spec.source_files     = 'ConsistencyManager/**/*.swift'
-  spec.platform         = :ios, '8.0'
-  spec.frameworks       = 'Foundation', 'UIKit'
+  
+  spec.ios.deployment_target = '8.0'
+  spec.ios.frameworks        = 'Foundation', 'UIKit'
+
+  spec.osx.deployment_target = '10.9'
+  spec.osx.frameworks        = 'Foundation'
 end
 

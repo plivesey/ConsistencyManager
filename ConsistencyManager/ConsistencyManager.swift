@@ -8,7 +8,9 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 
 import Foundation
-import UIKit
+#if os(iOS)
+    import UIKit
+#endif
 
 /**
  This is the main class for the library and contains most of the logic. For a detailed overview, please check the docs.
@@ -774,7 +776,10 @@ public class ConsistencyManager {
 
         override init() {
             super.init()
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(UIApplicationDelegate.applicationDidReceiveMemoryWarning(_:)), name: UIApplicationDidReceiveMemoryWarningNotification, object: nil)
+            #if os(iOS)
+                // On OSX, we don't need this since there are no memory warnings.
+                NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MemoryWarningListener.applicationDidReceiveMemoryWarning(_:)), name: UIApplicationDidReceiveMemoryWarningNotification, object: nil)
+            #endif
         }
 
         deinit {

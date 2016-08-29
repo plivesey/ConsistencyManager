@@ -17,6 +17,7 @@ class MemoryWarningTests: ConsistencyManagerTestCase {
     var cleanMemoryFinishedTimes = [NSDate]()
 
 
+    #if os(iOS)
     func testMemoryWarning() {
         let testStart = NSDate()
 
@@ -63,4 +64,5 @@ class MemoryWarningTests: ConsistencyManagerTestCase {
         XCTAssertTrue(cleanMemoryStartedTimes[0].timeIntervalSince1970 <= cleanMemoryFinishedTimes[0].timeIntervalSince1970)
         XCTAssertTrue(testStart.timeIntervalSince1970 <= cleanMemoryStartedTimes[0].timeIntervalSince1970)
     }
+    #endif
 }
