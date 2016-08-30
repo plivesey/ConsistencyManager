@@ -15,8 +15,8 @@ time xcodebuild clean test \
     | xcpretty &&
 rm -rf $DERIVED_DATA &&
 time xcodebuild clean build \
-    -project LayoutKit.xcodeproj \
-    -scheme LayoutKitSampleApp-iOS \
+    -project ConsistencyManager.xcodeproj \
+    -scheme ConsistencyManager \
     -sdk iphonesimulator9.3 \
     -derivedDataPath $DERIVED_DATA \
     -destination 'platform=iOS Simulator,name=iPhone 6,OS=8.4' \
