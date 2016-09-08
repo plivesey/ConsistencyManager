@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name             = 'ConsistencyManager'
-  spec.version          = '2.0.0'
+  spec.version          = '2.0.1'
   spec.license          = { :type => 'Apache License, Version 2.0' }
   spec.homepage         = 'https://linkedin.github.io/ConsistencyManager-iOS'
   spec.authors          = 'LinkedIn'
@@ -11,7 +11,7 @@ Pod::Spec.new do |spec|
   spec.ios.deployment_target = '8.0'
   spec.ios.frameworks        = 'Foundation', 'UIKit'
 
-  spec.osx.deployment_target = '10.9'
+  spec.osx.deployment_target = '10.11'
   spec.osx.frameworks        = 'Foundation'
 end
 
