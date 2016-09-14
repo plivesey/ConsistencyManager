@@ -755,6 +755,10 @@ public class ConsistencyManager {
                 // Default to true if weakOperation is nil
                 return weakOperation?.cancelled ?? true
             }
+            // Let's check here to see if it's cancelled before we start
+            if cancelled() {
+                return
+            }
             task(cancelled)
         }
         weakOperation = operation
