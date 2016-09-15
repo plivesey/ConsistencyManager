@@ -39,5 +39,4 @@ class GarbageCollectionTests: ConsistencyManagerTestCase {
             expectation?.fulfill()
         }
     }
-    
 }
