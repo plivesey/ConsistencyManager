@@ -118,8 +118,6 @@ class ConsistencyManagerTestCase: XCTestCase {
     }
 
     func flushMainQueueOperations() {
-        let expectation = expectationWithDescription("Wait for main queue to finish so the updates have happened")
-    func waitOnMainThread() {
         let expectation = self.expectation(description: "Wait for main queue to finish so the updates have happened")
 
         DispatchQueue.main.async {

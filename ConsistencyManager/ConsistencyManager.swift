@@ -781,9 +781,8 @@ open class ConsistencyManager {
             super.init()
             #if os(iOS)
                 // On OSX, we don't need this since there are no memory warnings.
-                NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MemoryWarningListener.applicationDidReceiveMemoryWarning(_:)), name: UIApplicationDidReceiveMemoryWarningNotification, object: nil)
+                NotificationCenter.default.addObserver(self, selector: #selector(UIApplicationDelegate.applicationDidReceiveMemoryWarning(_:)), name: NSNotification.Name.UIApplicationDidReceiveMemoryWarning, object: nil)
             #endif
-            NotificationCenter.default.addObserver(self, selector: #selector(UIApplicationDelegate.applicationDidReceiveMemoryWarning(_:)), name: NSNotification.Name.UIApplicationDidReceiveMemoryWarning, object: nil)
         }
 
         deinit {

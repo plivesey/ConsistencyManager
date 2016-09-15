@@ -33,12 +33,12 @@ class MemoryWarningTests: ConsistencyManagerTestCase {
             return consistencyManager
             }()
 
-        NSNotificationCenter.defaultCenter().addObserverForName(ConsistencyManager.kCleanMemoryAsynchronousWorkStarted, object: consistencyManager, queue: nil) { _ in
-            self.cleanMemoryStartedTimes.append(NSDate())
+        _ = NotificationCenter.default.addObserver(forName: ConsistencyManager.kCleanMemoryAsynchronousWorkStarted, object: consistencyManager, queue: nil) { _ in
+            self.cleanMemoryStartedTimes.append(Date())
         }
 
-        NSNotificationCenter.defaultCenter().addObserverForName(ConsistencyManager.kCleanMemoryAsynchronousWorkFinished, object: consistencyManager, queue: nil) { _ in
-            self.cleanMemoryFinishedTimes.append(NSDate())
+        _ = NotificationCenter.default.addObserver(forName: ConsistencyManager.kCleanMemoryAsynchronousWorkFinished, object: consistencyManager, queue: nil) { _ in
+            self.cleanMemoryFinishedTimes.append(Date())
         }
 
         // This part MAY fail in the future if we change the logic for when we prune the listeners dictionary
