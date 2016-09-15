@@ -420,7 +420,7 @@ open class ConsistencyManager {
             
             let dispatchQueue = DispatchQueue.global(qos: DispatchQoS.QoSClass.utility)
             // Weak here is necessary, otherwise, we'd have a retain cycle.
-            dispatchQueue.asyncAfter(deadline: DispatchTime.now() + Double(Int64(UInt64(garbageCollectionInterval) * NSEC_PER_SEC)) / Double(NSEC_PER_SEC)) { [weak self] in
+            dispatchQueue.asyncAfter(deadline: DispatchTime.now() + garbageCollectionInterval) { [weak self] in
                 // Don't need to dispatch here. We'll dispatch in cleanMemory. We never want this to be cancelled.
                 self?.cleanMemory()
                 DispatchQueue.main.async {
