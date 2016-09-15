@@ -82,11 +82,11 @@ class RaceConditionsTests: ConsistencyManagerTestCase {
             numberOfCurrentModelRequests += 1
 
             if numberOfCurrentModelRequests > 2 {
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     XCTAssertEqual(numberOfCurrentModelRequests, 4)
                 }
             } else {
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     XCTAssertEqual(numberOfCurrentModelRequests, 2)
                 }
             }
@@ -100,7 +100,7 @@ class RaceConditionsTests: ConsistencyManagerTestCase {
             
             // Let's dispatch and get the next main block
             // When we do this, we should get both updated
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 XCTAssertEqual(updates, 2)
             }
         }

@@ -16,6 +16,31 @@ import XCTest
  Originally, these were helper methods, but it turns out that you should only use expectations from an XCTestCase subclass so this seemed like a good solution.
  */
 class ConsistencyManagerTestCase: XCTestCase {
+
+    /**
+     This is a crazy work around for an Apple race condition introduced in iOS 10/Swift 2.3/Xcode 8 (unclear which).
+     Basically, waitForExpectations sometimes takes the full time even if the expectation is fulfilled.
+     This can cause the tests to take ~10 mins to run instead of 12 seconds.
+     Even though it takes 10 mins to run tests, the tests do pass. So, this is only to speed up tests (it's ok if it doesn't work 100% of the time).
+     This seems to fix the problem and tests now run quickly.
+     As soon as this bug is fixed, we can remove this workaround.
+     
+     To test if the bug is fixed, comment out all this code and run tests. If they take the same amount of time, the bug has been fixed.
+     */
+    static var workaroundXCTestTimeoutTimer: DispatchSourceTimer?
+
+    override func setUp() {
+        super.setUp()
+        if ConsistencyManagerTestCase.workaroundXCTestTimeoutTimer == nil {
+            let timer = DispatchSource.makeTimerSource(queue: .main)
+            ConsistencyManagerTestCase.workaroundXCTestTimeoutTimer = timer
+            timer.setEventHandler {}
+            let interval = DispatchTimeInterval.milliseconds(50)
+            timer.scheduleRepeating(deadline: .now() + interval, interval: interval)
+            timer.resume()
+        }
+    }
+
     func addListener(_ listener: ConsistencyManagerListener, toConsistencyManager consistencyManager: ConsistencyManager) {
         consistencyManager.listenForUpdates(listener)
 

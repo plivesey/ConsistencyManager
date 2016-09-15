@@ -25,20 +25,20 @@ final class ProjectionTreeModel: ConsistencyManagerModel, Equatable {
     let otherData: Int?
     let child: ProjectionTreeModel?
     let otherChild: ProjectionTreeModel?
-    let type: Type
+    let type: Projection
 
     /**
      We're going to use one class which represents three projections.
      One projection will have both data and otherData
      The other's will just have one of these fields.
      */
-    enum Type: String {
+    enum Projection: String {
         case data
         case otherData
         case both
     }
 
-    init(type: Type, id: Int, data: Int?, otherData: Int?, child: ProjectionTreeModel?, otherChild: ProjectionTreeModel?) {
+    init(type: Projection, id: Int, data: Int?, otherData: Int?, child: ProjectionTreeModel?, otherChild: ProjectionTreeModel?) {
         self.type = type
         self.id = id
         self.data = data
@@ -51,13 +51,13 @@ final class ProjectionTreeModel: ConsistencyManagerModel, Equatable {
         return "\(id)"
     }
 
-    func map(transform: ConsistencyManagerModel -> ConsistencyManagerModel?) -> ConsistencyManagerModel? {
+    func map(_ transform: (ConsistencyManagerModel) -> ConsistencyManagerModel?) -> ConsistencyManagerModel? {
         let newChild = child.flatMap(transform) as? ProjectionTreeModel
         let newOtherChild = otherChild.flatMap(transform) as? ProjectionTreeModel
         return ProjectionTreeModel(type: type, id: id, data: data, otherData: otherData, child: newChild, otherChild: newOtherChild)
     }
 
-    func forEach(function: ConsistencyManagerModel -> ()) {
+    func forEach(_ function: (ConsistencyManagerModel) -> ()) {
         if let child = child {
             function(child)
         }
@@ -66,7 +66,7 @@ final class ProjectionTreeModel: ConsistencyManagerModel, Equatable {
         }
     }
 
-    func mergeModel(model: ConsistencyManagerModel) -> ConsistencyManagerModel {
+    func mergeModel(_ model: ConsistencyManagerModel) -> ConsistencyManagerModel {
         if let model = model as? ProjectionTreeModel {
             return projectionTreeModelFromMergeModel(model)
         } else {
@@ -79,7 +79,7 @@ final class ProjectionTreeModel: ConsistencyManagerModel, Equatable {
         return type.rawValue
     }
 
-    private func projectionTreeModelFromMergeModel(model: ProjectionTreeModel) -> ProjectionTreeModel {
+    fileprivate func projectionTreeModelFromMergeModel(_ model: ProjectionTreeModel) -> ProjectionTreeModel {
         // We only want to update fields that are on our projection
         // If we are of type .data we don't want to grab the otherData field
         var otherData = self.otherData
@@ -107,7 +107,7 @@ final class ProjectionTreeModel: ConsistencyManagerModel, Equatable {
         return ProjectionTreeModel(type: type, id: id, data: data, otherData: otherData, child: child, otherChild: otherChild)
     }
 
-    private func projectionTreeModelFromMergeModel(model: ProjectionTreeModel?) -> ProjectionTreeModel? {
+    fileprivate func projectionTreeModelFromMergeModel(_ model: ProjectionTreeModel?) -> ProjectionTreeModel? {
         guard let model = model else {
             return nil
         }

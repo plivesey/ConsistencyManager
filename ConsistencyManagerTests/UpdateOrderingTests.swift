@@ -15,7 +15,7 @@ class UpdateOrderingTests: ConsistencyManagerTestCase {
 
     func testConsistencyManagerUpdateOrder() {
         for testProjections in [true, false] {
-            for numberOfModels in 30.stride(through: 50, by: 4) {
+            for numberOfModels in stride(from: 30, through: 50, by: 4) {
                 for branchingFactor in 1...10 {
                     let testModel = TestModelGenerator.consistencyManagerModelWithTotalChildren(numberOfModels, branchingFactor: branchingFactor, projectionModel: testProjections) { id in
                         // Let's test this with some ids missing
@@ -63,25 +63,25 @@ class UpdateOrderingTests: ConsistencyManagerTestCase {
                     // NOTE: Here we SHOULD NOT use the SyncronousHelperFunctions class because that will ensure the ordering in the tests
 
                     // First we need to wait for the consistency manager to finish on its queue
-                    let expectation = expectationWithDescription("Wait for consistency manager to finish it's task and async to the main queue")
+                    let expectation = self.expectation(description: "Wait for consistency manager to finish it's task and async to the main queue")
 
-                    let operation = NSBlockOperation() {
+                    let operation = BlockOperation() {
                         expectation.fulfill()
                     }
                     consistencyManager.queue.addOperation(operation)
 
-                    waitForExpectationsWithTimeout(10) { error in
+                    waitForExpectations(timeout: 10) { error in
                         XCTAssertNil(error)
                     }
 
                     // Now, we need to wait for the main queue to do the actual updates
-                    let mainQueueExpectation = expectationWithDescription("Wait for main queue to finish so the updates have happened")
+                    let mainQueueExpectation = self.expectation(description: "Wait for main queue to finish so the updates have happened")
 
-                    dispatch_async(dispatch_get_main_queue()) {
+                    DispatchQueue.main.async {
                         mainQueueExpectation.fulfill()
                     }
                     
-                    waitForExpectationsWithTimeout(10) { error in
+                    waitForExpectations(timeout: 10) { error in
                         XCTAssertNil(error)
                     }
                     

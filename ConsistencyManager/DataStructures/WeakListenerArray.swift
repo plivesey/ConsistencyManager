@@ -20,7 +20,7 @@ public struct WeakListenerArray: ExpressibleByArrayLiteral {
     // MARK: Internal
 
     /// The internal data is an array of closures which return weak T's
-    private var data: [() -> ConsistencyManagerListener?]
+    fileprivate var data: [() -> ConsistencyManagerListener?]
 
     // MARK: Initializers
 
@@ -105,7 +105,7 @@ public struct WeakListenerArray: ExpressibleByArrayLiteral {
 
     // MARK: Private Methods
 
-    private func weakClosureWithValue(_ object: ConsistencyManagerListener?) -> () -> ConsistencyManagerListener? {
+    fileprivate func weakClosureWithValue(_ object: ConsistencyManagerListener?) -> () -> ConsistencyManagerListener? {
         return { [weak object] in
             return object
         }

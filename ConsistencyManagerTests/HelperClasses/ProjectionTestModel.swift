@@ -35,7 +35,7 @@ final class ProjectionTestModel: ConsistencyManagerModel, Equatable {
         return id
     }
 
-    func map(transform: ConsistencyManagerModel -> ConsistencyManagerModel?) -> ConsistencyManagerModel? {
+    func map(_ transform: (ConsistencyManagerModel) -> ConsistencyManagerModel?) -> ConsistencyManagerModel? {
         var newChildren: [ProjectionTestModel] = []
         for model in children {
             if let newModel = transform(model) as? ProjectionTestModel {
@@ -50,26 +50,26 @@ final class ProjectionTestModel: ConsistencyManagerModel, Equatable {
         }
     }
 
-    func forEach(function: ConsistencyManagerModel -> ()) {
+    func forEach(_ function: (ConsistencyManagerModel) -> ()) {
         for model in children {
             function(model)
         }
         function(requiredModel)
     }
 
-    func mergeModel(model: ConsistencyManagerModel) -> ConsistencyManagerModel {
+    func mergeModel(_ model: ConsistencyManagerModel) -> ConsistencyManagerModel {
         if let model = model as? ProjectionTestModel {
             return model
         } else if let model = model as? TestModel {
             return testModelFromProjection(model)
         } else {
-            assertionFailure("Tried to merge two models which cannot be merged: \(self.dynamicType) and \(model.dynamicType)")
+            assertionFailure("Tried to merge two models which cannot be merged: \(type(of: self)) and \(type(of: model))")
             // The best we can do is return self (no merging done)
             return self
         }
     }
 
-    private func testModelFromProjection(model: TestModel) -> ProjectionTestModel {
+    fileprivate func testModelFromProjection(_ model: TestModel) -> ProjectionTestModel {
         let newChildren = model.children.map { currentChild in
             return testModelFromProjection(currentChild)
         }
@@ -99,7 +99,7 @@ extension ProjectionTestModel: CustomStringConvertible {
 // MARK - Helpers
 
 extension ProjectionTestModel {
-    func recursiveChildWithId(id: String) -> ProjectionTestModel? {
+    func recursiveChildWithId(_ id: String) -> ProjectionTestModel? {
         if let currentId = self.id {
             if currentId == id {
                 return self

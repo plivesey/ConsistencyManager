@@ -26,7 +26,7 @@ public struct WeakArray<T: AnyObject>: ExpressibleByArrayLiteral {
     // MARK: Internal
 
     /// The internal data is an array of closures which return weak T's
-    private var data: [() -> T?]
+    fileprivate var data: [() -> T?]
 
     // MARK: Initializers
 
@@ -108,7 +108,7 @@ public struct WeakArray<T: AnyObject>: ExpressibleByArrayLiteral {
 
     // MARK: Private Methods
 
-    private func weakClosureWithValue(_ object: T?) -> () -> T? {
+    fileprivate func weakClosureWithValue(_ object: T?) -> () -> T? {
         return { [weak object] in
             return object
         }

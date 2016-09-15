@@ -18,7 +18,7 @@ class PauseListenerTests: ConsistencyManagerTestCase {
     /**
      This provides some reusable code for generating a test model with many children.
      */
-    func setUpListeners(quantity: Int, projectionModel: Bool) -> ([TestListener], ConsistencyManager) {
+    func setUpListeners(_ quantity: Int, projectionModel: Bool) -> ([TestListener], ConsistencyManager) {
         // We generate models with varying lists of children for more thorough testing.
         let testModel = TestModelGenerator.consistencyManagerModelWithTotalChildren(10, branchingFactor: 3, projectionModel: projectionModel) { id in
             return true
@@ -50,7 +50,7 @@ class PauseListenerTests: ConsistencyManagerTestCase {
             listener.updateClosure = { (_, updates) in
                 numberOfUpdates += 1
                 modelUpdates = updates
-                XCTAssertTrue(NSThread.currentThread().isMainThread)
+                XCTAssertTrue(Thread.current.isMainThread)
             }
             var contextString: String?
             listener.contextClosure = { context in
@@ -135,12 +135,12 @@ class PauseListenerTests: ConsistencyManagerTestCase {
             var modelUpdatesPausedListener = ModelUpdates(changedModelIds: [], deletedModelIds: [])
             activeListener.updateClosure = { (_, updates) in
                 numberOfUpdates1 += 1
-                XCTAssertTrue(NSThread.currentThread().isMainThread)
+                XCTAssertTrue(Thread.current.isMainThread)
             }
             pausedListener.updateClosure = { (_, updates) in
                 numberOfUpdates2 += 1
                 modelUpdatesPausedListener = updates
-                XCTAssertTrue(NSThread.currentThread().isMainThread)
+                XCTAssertTrue(Thread.current.isMainThread)
             }
 
             // Current models before the update
@@ -225,7 +225,7 @@ class PauseListenerTests: ConsistencyManagerTestCase {
             listener.updateClosure = { (_, updates) in
                 numberOfUpdates += 1
                 modelUpdates = updates
-                XCTAssertTrue(NSThread.currentThread().isMainThread)
+                XCTAssertTrue(Thread.current.isMainThread)
             }
 
             // Current model before the update
@@ -264,7 +264,7 @@ class PauseListenerTests: ConsistencyManagerTestCase {
         listener.updateClosure = { (_, updates) in
             numberOfUpdates += 1
             modelUpdates = updates
-            XCTAssertTrue(NSThread.currentThread().isMainThread)
+            XCTAssertTrue(Thread.current.isMainThread)
         }
 
         // Current model before the update
@@ -317,7 +317,7 @@ class PauseListenerTests: ConsistencyManagerTestCase {
             pausedListener.updateClosure = { (_, updates) in
                 numberOfUpdatesToPausedListener += 1
                 modelUpdatesPausedListener = updates
-                XCTAssertTrue(NSThread.currentThread().isMainThread)
+                XCTAssertTrue(Thread.current.isMainThread)
             }
             var contextStringSavedToPausedListener: String?
             pausedListener.contextClosure = { context in
@@ -330,7 +330,7 @@ class PauseListenerTests: ConsistencyManagerTestCase {
             activeListener.updateClosure = { (_, updates) in
                 numberOfUpdatesToActiveListener += 1
                 modelUpdatesActiveListener = updates
-                XCTAssertTrue(NSThread.currentThread().isMainThread)
+                XCTAssertTrue(Thread.current.isMainThread)
             }
             var contextStringSavedToActiveListener: String?
             activeListener.contextClosure = { context in
@@ -503,14 +503,14 @@ class PauseListenerTests: ConsistencyManagerTestCase {
                 XCTAssertEqual(updates.changedModelIds.count, 0)
                 XCTAssertEqual(updates.deletedModelIds, ["0"])
                 numberOfUpdatesforPausedListener += 1
-                XCTAssertTrue(NSThread.currentThread().isMainThread)
+                XCTAssertTrue(Thread.current.isMainThread)
             }
             var calledActiveListenerUpdateClosure = false
             var numberOfUpdatesForActiveListener = 0
             activeListener.updateClosure = { model, updates in
                 calledActiveListenerUpdateClosure = true
                 numberOfUpdatesForActiveListener += 1
-                XCTAssertTrue(NSThread.currentThread().isMainThread)
+                XCTAssertTrue(Thread.current.isMainThread)
             }
 
             // Current model before the delete
@@ -556,7 +556,7 @@ class PauseListenerTests: ConsistencyManagerTestCase {
         listener.updateClosure = { (_, updates) in
             numberOfUpdates += 1
             XCTAssertEqual(updates.deletedModelIds, ["0"])
-            XCTAssertTrue(NSThread.currentThread().isMainThread)
+            XCTAssertTrue(Thread.current.isMainThread)
         }
 
         addListener(listener, toConsistencyManager: consistencyManager)
@@ -592,7 +592,7 @@ class PauseListenerTests: ConsistencyManagerTestCase {
                 numberOfUpdates += 1
                 XCTAssertEqual(updates.deletedModelIds, ["0", "1"])
                 XCTAssertEqual(updates.changedModelIds, [])
-                XCTAssertTrue(NSThread.currentThread().isMainThread)
+                XCTAssertTrue(Thread.current.isMainThread)
             }
 
             addListener(listener, toConsistencyManager: consistencyManager)
@@ -788,7 +788,7 @@ class PauseListenerTests: ConsistencyManagerTestCase {
 
         var updateClosure: ((BatchListener, [ConsistencyManagerListener], ModelUpdates, Any?)->())?
 
-        func batchListener(batchListener: BatchListener, hasUpdatedListeners listeners: [ConsistencyManagerListener], updates: ModelUpdates, context: Any?) {
+        func batchListener(_ batchListener: BatchListener, hasUpdatedListeners listeners: [ConsistencyManagerListener], updates: ModelUpdates, context: Any?) {
             updateClosure?(batchListener, listeners, updates, context)
         }
     }

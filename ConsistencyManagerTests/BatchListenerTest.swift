@@ -229,7 +229,7 @@ class BatchListenerTest: ConsistencyManagerTestCase {
 
         var updateClosure: ((BatchListener, [ConsistencyManagerListener], ModelUpdates, Any?)->())?
 
-        func batchListener(batchListener: BatchListener, hasUpdatedListeners listeners: [ConsistencyManagerListener], updates: ModelUpdates, context: Any?) {
+        func batchListener(_ batchListener: BatchListener, hasUpdatedListeners listeners: [ConsistencyManagerListener], updates: ModelUpdates, context: Any?) {
             updateClosure?(batchListener, listeners, updates, context)
         }
     }

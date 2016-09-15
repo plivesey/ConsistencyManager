@@ -13,13 +13,13 @@ import XCTest
 
 class MemoryWarningTests: ConsistencyManagerTestCase {
 
-    var cleanMemoryStartedTimes = [NSDate]()
-    var cleanMemoryFinishedTimes = [NSDate]()
+    var cleanMemoryStartedTimes = [Date]()
+    var cleanMemoryFinishedTimes = [Date]()
 
 
     #if os(iOS)
     func testMemoryWarning() {
-        let testStart = NSDate()
+        let testStart = Date()
 
         let model = TestRequiredModel(id: "0", data: 0)
 
@@ -49,7 +49,7 @@ class MemoryWarningTests: ConsistencyManagerTestCase {
             XCTFail()
         }
 
-        NSNotificationCenter.defaultCenter().postNotificationName(UIApplicationDidReceiveMemoryWarningNotification, object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name.UIApplicationDidReceiveMemoryWarning, object: nil)
         waitOnDispatchQueue(consistencyManager)
 
         // Now, listeners array should be 0 or nil

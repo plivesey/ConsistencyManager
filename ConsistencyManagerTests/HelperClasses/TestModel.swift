@@ -59,7 +59,7 @@ final class TestModel: ConsistencyManagerModel, Equatable {
         } else if let model = model as? ProjectionTestModel {
             return TestModel.testModelFromProjection(model)
         } else {
-            assertionFailure("Tried to merge two models which cannot be merged: \(self.dynamicType) and \(model.dynamicType)")
+            assertionFailure("Tried to merge two models which cannot be merged: \(type(of: self)) and \(type(of: model))")
             // The best we can do is return self (no merging done)
             return self
         }

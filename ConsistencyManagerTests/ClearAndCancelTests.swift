@@ -23,12 +23,12 @@ class ClearAndCancelTests: ConsistencyManagerTestCase {
         addListener(pausedListener, toConsistencyManager: consistencyManager)
         consistencyManager.pauseListeningForUpdates(pausedListener)
 
-        let expectation = expectationWithDescription("Wait for clear to complete")
+        let expectation = self.expectation(description: "Wait for clear to complete")
         consistencyManager.clearListenersAndCancelAllTasks {
             expectation.fulfill()
         }
 
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
 
         XCTAssertEqual(consistencyManager.listeners.count, 0)
         XCTAssertEqual(consistencyManager.pausedListeners.count, 0)
@@ -49,12 +49,12 @@ class ClearAndCancelTests: ConsistencyManagerTestCase {
         let updateModel = TestRequiredModel(id: "0", data: 1)
         consistencyManager.updateWithNewModel(updateModel)
 
-        let expectation = expectationWithDescription("Wait for clear to complete")
+        let expectation = self.expectation(description: "Wait for clear to complete")
         consistencyManager.clearListenersAndCancelAllTasks {
             expectation.fulfill()
         }
 
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
 
         waitOnDispatchQueue(consistencyManager)
         flushMainQueueOperations()
@@ -78,7 +78,7 @@ class ClearAndCancelTests: ConsistencyManagerTestCase {
             XCTFail()
         }
 
-        let expectation = expectationWithDescription("Wait for clear to complete")
+        let expectation = self.expectation(description: "Wait for clear to complete")
         listener.currentModelRequested = {
             // We're half way through this task. So let's cancel everything!
             consistencyManager.clearListenersAndCancelAllTasks {
@@ -89,7 +89,7 @@ class ClearAndCancelTests: ConsistencyManagerTestCase {
         let updateModel = TestRequiredModel(id: "0", data: 1)
         consistencyManager.updateWithNewModel(updateModel)
 
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
 
         waitOnDispatchQueue(consistencyManager)
         flushMainQueueOperations()

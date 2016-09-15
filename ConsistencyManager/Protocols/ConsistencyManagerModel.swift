@@ -239,6 +239,6 @@ public extension ConsistencyManagerModel {
     var projectionIdentifier: String {
         // Returns the class name as a string
         // This means each class type identifies a different projection
-        return String(self.dynamicType)
+        return String(describing: type(of: self))
     }
 }

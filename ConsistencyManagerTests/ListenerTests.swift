@@ -17,17 +17,29 @@ class ListenerTests: ConsistencyManagerTestCase {
     Test full models (everything has an ID
     */
     func testFullModels() {
+        var now = Date()
         // Only want even number of models. See TestModelGenerator docs.
-        for numberOfModels in 2.stride(through: 100, by: 4) {
+        for numberOfModels in stride(from: 2, through: 100, by: 4) {
             for branchingFactor in 1...10 {
                 let testModel = TestModelGenerator.testModelWithTotalChildren(numberOfModels, branchingFactor: branchingFactor) { id in
                     // These are full models, so we want everything to have an id
                     return true
                 }
+                if -now.timeIntervalSinceNow > 10 {
+                    print("first")
+                    print(-now.timeIntervalSinceNow)
+                    print("branching: \(branchingFactor) numberModels: \(numberOfModels)")
+                }
+                now = Date()
 
                 runTestOnTestModel(testModel, maxId: numberOfModels - 1) { id in
                     return true
                 }
+                if -now.timeIntervalSinceNow > 10 {
+                    print(-now.timeIntervalSinceNow)
+                    print("branching: \(branchingFactor) numberModels: \(numberOfModels)")
+                }
+                now = Date()
             }
         }
     }
@@ -37,7 +49,7 @@ class ListenerTests: ConsistencyManagerTestCase {
     */
     func testPartialModels() {
         // Only want even number of models. See TestModelGenerator docs.
-        for numberOfModels in 2.stride(through: 100, by: 4) {
+        for numberOfModels in stride(from: 2, through: 100, by: 4) {
             for branchingFactor in 1...10 {
                 let testModel = TestModelGenerator.testModelWithTotalChildren(numberOfModels, branchingFactor: branchingFactor) { id in
                     // Let's only put ids on a third of the models
@@ -53,7 +65,7 @@ class ListenerTests: ConsistencyManagerTestCase {
 
     func testNoIdsOnModels() {
         // Only want even number of models. See TestModelGenerator docs.
-        for numberOfModels in 2.stride(through: 100, by: 4) {
+        for numberOfModels in stride(from: 2, through: 100, by: 4) {
             for branchingFactor in 1...10 {
                 let testModel = TestModelGenerator.testModelWithTotalChildren(numberOfModels, branchingFactor: branchingFactor) { id in
                     // Let's only put ids on a third of the models
@@ -72,7 +84,7 @@ class ListenerTests: ConsistencyManagerTestCase {
     */
     func testRootHasNoId() {
         // Only want even number of models. See TestModelGenerator docs.
-        for numberOfModels in 2.stride(through: 100, by: 4) {
+        for numberOfModels in stride(from: 2, through: 100, by: 4) {
             for branchingFactor in 1...10 {
                 let testModel = TestModelGenerator.testModelWithTotalChildren(numberOfModels, branchingFactor: branchingFactor) { id in
                     // Will return false for 0
@@ -91,7 +103,7 @@ class ListenerTests: ConsistencyManagerTestCase {
     This partially depends on the implementation of ARC. So this may break in the future and will need to be fixed.
     */
     func testRetainCycle() {
-        for numberOfModels in 2.stride(through: 100, by: 4) {
+        for numberOfModels in stride(from: 2, through: 100, by: 4) {
             for branchingFactor in 1...10 {
                 let testModel = TestModelGenerator.testModelWithTotalChildren(numberOfModels, branchingFactor: branchingFactor) { id in
                     return id % 3 == 0
@@ -122,7 +134,7 @@ class ListenerTests: ConsistencyManagerTestCase {
     }
 
     func testMultipleAdditions() {
-        for numberOfModels in 2.stride(through: 40, by: 4) {
+        for numberOfModels in stride(from: 2, through: 40, by: 4) {
             for branchingFactor in 1...5 {
                 let testModel = TestModelGenerator.testModelWithTotalChildren(numberOfModels, branchingFactor: branchingFactor) { id in
                     // Let's only put ids on a third of the models
@@ -164,7 +176,7 @@ class ListenerTests: ConsistencyManagerTestCase {
 
     func testMultipleListenersToSameModel() {
         // Only want even number of models. See TestModelGenerator docs.
-        for numberOfModels in 2.stride(through: 100, by: 4) {
+        for numberOfModels in stride(from: 2, through: 100, by: 4) {
             for branchingFactor in 1...10 {
                 let testModel = TestModelGenerator.testModelWithTotalChildren(numberOfModels, branchingFactor: branchingFactor) { id in
                     // Will return false for 0
@@ -208,7 +220,7 @@ class ListenerTests: ConsistencyManagerTestCase {
 
     func testMultipleListenersToDifferentModels() {
         // Only want even number of models. See TestModelGenerator docs.
-        for numberOfModels in 2.stride(through: 40, by: 4) {
+        for numberOfModels in stride(from: 2, through: 40, by: 4) {
             for branchingFactor in 1...10 {
                 let testModel1 = TestModelGenerator.testModelWithTotalChildren(numberOfModels, branchingFactor: branchingFactor) { id in
                     // Will return false for 0
@@ -262,11 +274,15 @@ class ListenerTests: ConsistencyManagerTestCase {
     Helper method.
     This method runs a test model throught he consistency manager and verifies that certain ids are being listened too.
     */
-    func runTestOnTestModel(testModel: TestModel, maxId: Int, idShouldBePresent idFunction: Int -> Bool) {
+    func runTestOnTestModel(_ testModel: TestModel, maxId: Int, idShouldBePresent idFunction: (Int) -> Bool) {
         let listener = TestListener(model: testModel)
         let consistencyManager = ConsistencyManager()
-        
+
+        let now = Date()
         addListener(listener, toConsistencyManager: consistencyManager)
+        if -now.timeIntervalSinceNow > 10 {
+            print("add listener")
+        }
         
         for id in 0...max(maxId, 0) {
             let shouldBePresent = idFunction(id)

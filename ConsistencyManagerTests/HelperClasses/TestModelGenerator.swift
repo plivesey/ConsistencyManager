@@ -62,7 +62,7 @@ class TestModelGenerator {
     /**
     Generates an immutable TestModel from a tree object.
     */
-    private class func testModelFromTree(_ tree: ChildrenTree, includeId: (Int) -> Bool) -> TestModel {
+    fileprivate class func testModelFromTree(_ tree: ChildrenTree, includeId: (Int) -> Bool) -> TestModel {
         let testModelChildren: [TestModel] = tree.children.map { node in
             return self.testModelFromTree(node, includeId: includeId)
         }
@@ -79,7 +79,7 @@ class TestModelGenerator {
     /**
      Generates an immutable ProjectionTestModel from a tree object.
      */
-    private class func projectionTestModelFromTree(_ tree: ChildrenTree, includeId: (Int) -> Bool) -> ProjectionTestModel {
+    fileprivate class func projectionTestModelFromTree(_ tree: ChildrenTree, includeId: (Int) -> Bool) -> ProjectionTestModel {
         let testModelChildren: [ProjectionTestModel] = tree.children.map { node in
             return self.projectionTestModelFromTree(node, includeId: includeId)
         }
@@ -97,7 +97,7 @@ class TestModelGenerator {
     /**
     Use a breadth first search to generate a tree with a certain number of nodes.
     */
-    private class func childrenTreeWithTotalNodes(_ nodes: Int, branchingFactor: Int, startingId: Int) -> ChildrenTree {
+    fileprivate class func childrenTreeWithTotalNodes(_ nodes: Int, branchingFactor: Int, startingId: Int) -> ChildrenTree {
         var nodeQueue = [ChildrenTree]()
 
         var currentId = startingId
@@ -126,7 +126,7 @@ class TestModelGenerator {
         return rootNode
     }
     
-    private class func stringIdFromInt(_ id: Int, includeId: (Int) -> Bool) -> String? {
+    fileprivate class func stringIdFromInt(_ id: Int, includeId: (Int) -> Bool) -> String? {
         if includeId(id) {
             return "\(id)"
         } else {
@@ -134,7 +134,7 @@ class TestModelGenerator {
         }
     }
     
-    private class ChildrenTree {
+    fileprivate class ChildrenTree {
         let id: Int
         var children = [ChildrenTree]()
         
