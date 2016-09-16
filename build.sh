@@ -17,10 +17,12 @@ rm -rf $DERIVED_DATA &&
 time xcodebuild clean build \
     -project ConsistencyManager.xcodeproj \
     -scheme ConsistencyManager \
-    -sdk iphonesimulator9.3 \
+    -sdk iphonesimulator10.0 \
     -derivedDataPath $DERIVED_DATA \
-    -destination 'platform=iOS Simulator,name=iPhone 6,OS=8.4' \
-    -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.3' \
+# Disabling these until travis adds them
+#    -destination 'platform=iOS Simulator,name=iPhone 6,OS=8.4' \
+#    -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.3' \
+    -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.0' \
     | tee build.log \
     | xcpretty &&
 cat build.log
