@@ -9,7 +9,7 @@ rm -rf $DERIVED_DATA &&
 time xcodebuild clean test \
     -project ConsistencyManager.xcodeproj \
     -scheme ConsistencyManager \
-    -sdk macosx10.11 \
+    -sdk macosx \
     -derivedDataPath $DERIVED_DATA \
     | tee build.log \
     | xcpretty &&
