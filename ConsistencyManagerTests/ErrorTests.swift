@@ -53,8 +53,8 @@ class ErrorTests: ConsistencyManagerTestCase, ConsistencyManagerDelegate {
     
     // MARK: - Consistency Manager Delegate
     
-    func consistencyManager(consistencyManager: ConsistencyManager, failedWithCriticalError error: String) {
-        XCTAssertTrue(NSThread.currentThread().isMainThread)
+    func consistencyManager(_ consistencyManager: ConsistencyManager, failedWithCriticalError error: String) {
+        XCTAssertTrue(Thread.current.isMainThread)
         self.error = CriticalError(rawValue: error)
     }
 
@@ -65,16 +65,16 @@ class ErrorTests: ConsistencyManagerTestCase, ConsistencyManagerDelegate {
             return "0"
         }
 
-        func map(transform: ConsistencyManagerModel -> ConsistencyManagerModel?) -> ConsistencyManagerModel? {
+        func map(_ transform: (ConsistencyManagerModel) -> ConsistencyManagerModel?) -> ConsistencyManagerModel? {
             // This is an error
             return TestRequiredModel(id: nil, data: 0)
         }
 
-        func forEach(function: ConsistencyManagerModel -> ()) {
+        func forEach(_ function: (ConsistencyManagerModel) -> ()) {
             function(TestRequiredModel(id: "1", data: 0))
         }
 
-        func isEqualToModel(other: ConsistencyManagerModel) -> Bool {
+        func isEqualToModel(_ other: ConsistencyManagerModel) -> Bool {
             return false
         }
     }

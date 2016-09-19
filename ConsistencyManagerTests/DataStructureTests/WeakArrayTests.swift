@@ -215,7 +215,7 @@ class WeakArrayTests: ConsistencyManagerTestCase {
                 return newElement
             }
 
-            let sequence = mappedWeakArray.enumerate()
+            let sequence = mappedWeakArray.enumerated()
             for (index, element) in sequence {
                 if let element = element {
                     XCTAssertEqual(index + 1, element.value)
@@ -245,7 +245,7 @@ class WeakArrayTests: ConsistencyManagerTestCase {
                 return newElement
             }
 
-            let sequence = mappedWeakArray.enumerate()
+            let sequence = mappedWeakArray.enumerated()
             for (index, element) in sequence {
                 if let element = element {
                     XCTAssertEqual(index + 1, element.data)
@@ -289,7 +289,7 @@ class WeakArrayTests: ConsistencyManagerTestCase {
                     strongArray.append(testObject)
                     weakArray.append(testObject)
                 }
-                var seenArray = Array<Bool>(count: count, repeatedValue: false)
+                var seenArray = Array<Bool>(repeating: false, count: count)
                 
                 // Now let's test the iterator phase 1
                 for element in weakArray {

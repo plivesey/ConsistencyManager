@@ -20,7 +20,7 @@ class UpdateTests: ConsistencyManagerTestCase {
     func testUpdateSameModel() {
         for testProjections in [true, false] {
             // Only want even number of models. See TestModelGenerator docs.
-            for numberOfModels in 2.stride(through: 40, by: 4) {
+            for numberOfModels in stride(from: 2, through: 40, by: 4) {
                 // Branching factor shouldn't really be a factor, so let's just test these two values
                 for branchingFactor in 1...2 {
                     let testModel = TestModelGenerator.consistencyManagerModelWithTotalChildren(numberOfModels, branchingFactor: branchingFactor, projectionModel: testProjections) { id in
@@ -53,7 +53,7 @@ class UpdateTests: ConsistencyManagerTestCase {
     func testListenerSubtree() {
         for testProjections in [true, false] {
             // Only want even number of models. See TestModelGenerator docs.
-            for numberOfModels in 2.stride(through: 100, by: 4) {
+            for numberOfModels in stride(from: 2, through: 100, by: 4) {
                 for branchingFactor in 1...5 {
                     let testModel = TestModelGenerator.consistencyManagerModelWithTotalChildren(numberOfModels, branchingFactor: branchingFactor, projectionModel: testProjections) { id in
                         // Let's test this with some ids missing
@@ -89,7 +89,7 @@ class UpdateTests: ConsistencyManagerTestCase {
         for testProjections in [true, false] {
             // Only want even number of models. See TestModelGenerator docs.
             // Let's skip 2 models since then the listener won't have a subtree
-            for numberOfModels in 4.stride(through: 40, by: 4) {
+            for numberOfModels in stride(from: 4, through: 40, by: 4) {
                 for branchingFactor in 1...5 {
                     let testModel = TestModelGenerator.consistencyManagerModelWithTotalChildren(numberOfModels, branchingFactor: branchingFactor, projectionModel: testProjections) { id in
                         // Let's make everything we're testing have an id. This will be 0, 2, 6, 10...
@@ -97,7 +97,7 @@ class UpdateTests: ConsistencyManagerTestCase {
                         return id == 0 || includeId
                     }
 
-                    for replacementId in 2.stride(through: numberOfModels, by: 4) {
+                    for replacementId in stride(from: 2, through: numberOfModels, by: 4) {
 
                         let consistencyManager = ConsistencyManager()
                         let listener = TestListener(model: testModel)
@@ -130,7 +130,7 @@ class UpdateTests: ConsistencyManagerTestCase {
         for testProjections in [true, false] {
             // Only want even number of models. See TestModelGenerator docs.
             // Let's skip 2 models since then the listener won't have a subtree
-            for numberOfModels in 4.stride(through: 40, by: 4) {
+            for numberOfModels in stride(from: 4, through: 40, by: 4) {
                 for branchingFactor in 1...5 {
                     let testModel = TestModelGenerator.consistencyManagerModelWithTotalChildren(numberOfModels, branchingFactor: branchingFactor, projectionModel: testProjections) { id in
                         // Let's make everything we're testing have an id. This will be 0, 2, 6, 10...
@@ -139,7 +139,7 @@ class UpdateTests: ConsistencyManagerTestCase {
                     }
 
                     // Loop through a bunch of ids we'll look to replace. Note: All these are subtrees of the listener model
-                    for replacementId in 2.stride(through: numberOfModels, by: 4) {
+                    for replacementId in stride(from: 2, through: numberOfModels, by: 4) {
 
                         let consistencyManager = ConsistencyManager()
                         let listener = TestListener(model: testModel)
@@ -206,9 +206,9 @@ class UpdateTests: ConsistencyManagerTestCase {
     func testNoIDsInCommon() {
         for testProjections in [true, false] {
             // Only want even number of models. See TestModelGenerator docs.
-            for numberOfModels in 2.stride(through: 40, by: 4) {
+            for numberOfModels in stride(from: 2, through: 40, by: 4) {
                 for branchingFactor in 1...5 {
-                    for numberOfTestModels in numberOfModels.stride(through: 40, by: 4) {
+                    for numberOfTestModels in stride(from: numberOfModels, through: 40, by: 4) {
                         let testModel = TestModelGenerator.consistencyManagerModelWithTotalChildren(numberOfModels, branchingFactor: branchingFactor, projectionModel: testProjections) { id in
                             // Let's make everything we're testing have an id. This will be 0, 2, 6, 10...
                             return id % 3 == 0

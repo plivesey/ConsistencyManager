@@ -31,7 +31,7 @@ final class TestModel: ConsistencyManagerModel, Equatable {
         return id
     }
 
-    func map(transform: ConsistencyManagerModel -> ConsistencyManagerModel?) -> ConsistencyManagerModel? {
+    func map(_ transform: (ConsistencyManagerModel) -> ConsistencyManagerModel?) -> ConsistencyManagerModel? {
         var newChildren: [TestModel] = []
         for model in children {
             if let newModel = transform(model) as? TestModel {
@@ -46,26 +46,26 @@ final class TestModel: ConsistencyManagerModel, Equatable {
         }
     }
 
-    func forEach(function: ConsistencyManagerModel -> ()) {
+    func forEach(_ function: (ConsistencyManagerModel) -> ()) {
         for model in children {
             function(model)
         }
         function(requiredModel)
     }
 
-    func mergeModel(model: ConsistencyManagerModel) -> ConsistencyManagerModel {
+    func mergeModel(_ model: ConsistencyManagerModel) -> ConsistencyManagerModel {
         if let model = model as? TestModel {
             return model
         } else if let model = model as? ProjectionTestModel {
             return TestModel.testModelFromProjection(model)
         } else {
-            assertionFailure("Tried to merge two models which cannot be merged: \(self.dynamicType) and \(model.dynamicType)")
+            assertionFailure("Tried to merge two models which cannot be merged: \(type(of: self)) and \(type(of: model))")
             // The best we can do is return self (no merging done)
             return self
         }
     }
 
-    static func testModelFromProjection(model: ProjectionTestModel) -> TestModel {
+    static func testModelFromProjection(_ model: ProjectionTestModel) -> TestModel {
         let children = model.children.map { currentChild in
             return testModelFromProjection(currentChild)
         }
@@ -93,7 +93,7 @@ extension TestModel: CustomStringConvertible {
 // MARK - Helpers
 
 extension TestModel {
-    func recursiveChildWithId(id: String) -> TestModel? {
+    func recursiveChildWithId(_ id: String) -> TestModel? {
         if let currentId = self.id {
             if currentId == id {
                 return self

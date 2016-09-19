@@ -13,13 +13,13 @@ import XCTest
 
 class MemoryWarningTests: ConsistencyManagerTestCase {
 
-    var cleanMemoryStartedTimes = [NSDate]()
-    var cleanMemoryFinishedTimes = [NSDate]()
+    var cleanMemoryStartedTimes = [Date]()
+    var cleanMemoryFinishedTimes = [Date]()
 
 
     #if os(iOS)
     func testMemoryWarning() {
-        let testStart = NSDate()
+        let testStart = Date()
 
         let model = TestRequiredModel(id: "0", data: 0)
 
@@ -33,12 +33,12 @@ class MemoryWarningTests: ConsistencyManagerTestCase {
             return consistencyManager
             }()
 
-        NSNotificationCenter.defaultCenter().addObserverForName(ConsistencyManager.kCleanMemoryAsynchronousWorkStarted, object: consistencyManager, queue: nil) { _ in
-            self.cleanMemoryStartedTimes.append(NSDate())
+        _ = NotificationCenter.default.addObserver(forName: ConsistencyManager.kCleanMemoryAsynchronousWorkStarted, object: consistencyManager, queue: nil) { _ in
+            self.cleanMemoryStartedTimes.append(Date())
         }
 
-        NSNotificationCenter.defaultCenter().addObserverForName(ConsistencyManager.kCleanMemoryAsynchronousWorkFinished, object: consistencyManager, queue: nil) { _ in
-            self.cleanMemoryFinishedTimes.append(NSDate())
+        _ = NotificationCenter.default.addObserver(forName: ConsistencyManager.kCleanMemoryAsynchronousWorkFinished, object: consistencyManager, queue: nil) { _ in
+            self.cleanMemoryFinishedTimes.append(Date())
         }
 
         // This part MAY fail in the future if we change the logic for when we prune the listeners dictionary
@@ -49,7 +49,7 @@ class MemoryWarningTests: ConsistencyManagerTestCase {
             XCTFail()
         }
 
-        NSNotificationCenter.defaultCenter().postNotificationName(UIApplicationDidReceiveMemoryWarningNotification, object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name.UIApplicationDidReceiveMemoryWarning, object: nil)
         waitOnDispatchQueue(consistencyManager)
 
         // Now, listeners array should be 0 or nil
