@@ -74,14 +74,14 @@ open class ConsistencyManager {
      It's useful if you want to add timers to this work.
      Called on an internal thread.
     */
-    open static let kCleanMemoryAsynchronousWorkStarted = Notification.Name("com.linkedin.consistencyManager.kCleanMemoryAsynchronousWorkStarted")
+    public static let kCleanMemoryAsynchronousWorkStarted = Notification.Name("com.linkedin.consistencyManager.kCleanMemoryAsynchronousWorkStarted")
 
     /**
      This notification is fired whenever the asynchronous work of clean memory finishes.
      It's useful if you want to add timers to this work.
      Called on an internal thread.
      */
-    open static let kCleanMemoryAsynchronousWorkFinished = Notification.Name("com.linkedin.consistencyManager.kCleanMemoryAsynchronousWorkFinished")
+    public static let kCleanMemoryAsynchronousWorkFinished = Notification.Name("com.linkedin.consistencyManager.kCleanMemoryAsynchronousWorkFinished")
 
     // MARK: - Private ivars
 
