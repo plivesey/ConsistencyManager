@@ -42,7 +42,7 @@ class ConsistencyManagerTestCase: XCTestCase {
     }
 
     func addListener(_ listener: ConsistencyManagerListener, toConsistencyManager consistencyManager: ConsistencyManager) {
-        consistencyManager.listenForUpdates(listener)
+        consistencyManager.addListener(listener)
 
         waitOnDispatchQueue(consistencyManager)
     }
@@ -53,11 +53,11 @@ class ConsistencyManagerTestCase: XCTestCase {
         waitOnDispatchQueue(consistencyManager)
     }
 
-    func updateWithNewModel(_ model: ConsistencyManagerModel, consistencyManager: ConsistencyManager, context: Any? = nil) {
-        consistencyManager.updateWithNewModel(model, context: context)
+    func updateNewModel(_ model: ConsistencyManagerModel, consistencyManager: ConsistencyManager, context: Any? = nil, timeout: TimeInterval = 10) {
+        consistencyManager.updateModel(model, context: context)
 
         // First we need to wait for the consistency manager to finish on its queue
-        waitOnDispatchQueue(consistencyManager)
+        waitOnDispatchQueue(consistencyManager, timeout: timeout)
 
         // Now, we need to wait for the main queue to do the actual updates
         flushMainQueueOperations()
@@ -89,13 +89,13 @@ class ConsistencyManagerTestCase: XCTestCase {
         flushMainQueueOperations()
     }
 
-    func pauseListeningForUpdates(_ listener: ConsistencyManagerListener, consistencyManager: ConsistencyManager) {
+    func pauseListener(_ listener: ConsistencyManagerListener, consistencyManager: ConsistencyManager) {
         // This is synchronous so no wait is necessary here. This is just for readability and consistency with resume.
-        consistencyManager.pauseListeningForUpdates(listener)
+        consistencyManager.pauseListener(listener)
     }
 
-    func resumeListeningForUpdates(_ listener: ConsistencyManagerListener, consistencyManager: ConsistencyManager) {
-        consistencyManager.resumeListeningForUpdates(listener)
+    func resumeListener(_ listener: ConsistencyManagerListener, consistencyManager: ConsistencyManager) {
+        consistencyManager.resumeListener(listener)
 
         // First we need to wait for the consistency manager to finish on its queue
         waitOnDispatchQueue(consistencyManager)
@@ -104,7 +104,7 @@ class ConsistencyManagerTestCase: XCTestCase {
         flushMainQueueOperations()
     }
 
-    func waitOnDispatchQueue(_ consistencyManager: ConsistencyManager) {
+    func waitOnDispatchQueue(_ consistencyManager: ConsistencyManager, timeout: TimeInterval = 10) {
         let expectation = self.expectation(description: "Wait for consistency manager to update internal state")
 
         let operation = BlockOperation() {
@@ -112,7 +112,7 @@ class ConsistencyManagerTestCase: XCTestCase {
         }
         consistencyManager.queue.addOperation(operation)
 
-        waitForExpectations(timeout: 10) { error in
+        waitForExpectations(timeout: timeout) { error in
             XCTAssertNil(error)
         }
     }
