@@ -5,7 +5,7 @@ Pod::Spec.new do |spec|
   spec.homepage         = 'https://linkedin.github.io/ConsistencyManager-iOS'
   spec.authors          = 'LinkedIn'
   spec.summary          = 'Manages the consistency of immutable models.' 
-  spec.source           = { :git => 'https://github.com/linkedin/ConsistencyManager-iOS.git', :tag => spec.version }
+  spec.source           = { :git => 'https://github.com/plivesey/ConsistencyManager-iOS.git', :tag => spec.version }
   spec.source_files     = 'ConsistencyManager/**/*.swift'
   
   spec.ios.deployment_target  = '8.0'
