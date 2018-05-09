@@ -27,7 +27,7 @@ class ShortCurcuitTests: ConsistencyManagerTestCase {
         let updateModel = testModel.children[1].children[2]
         XCTAssertNotNil(updateModel.id, "If this is nil, this test won't work. Make sure to pick a model with a real id")
 
-        listener.updateClosure = { _ in
+        listener.updateClosure = { _, _ in
             // We shouldn't get called since the new model doesn't cause the model to change
             // It should have short curcuited
             XCTFail()

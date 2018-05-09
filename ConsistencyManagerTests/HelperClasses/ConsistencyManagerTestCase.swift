@@ -36,7 +36,7 @@ class ConsistencyManagerTestCase: XCTestCase {
             ConsistencyManagerTestCase.workaroundXCTestTimeoutTimer = timer
             timer.setEventHandler {}
             let interval = DispatchTimeInterval.milliseconds(50)
-            timer.scheduleRepeating(deadline: .now() + interval, interval: interval)
+            timer.schedule(deadline: .now() + interval, repeating: interval)
             timer.resume()
         }
     }

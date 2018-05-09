@@ -24,7 +24,7 @@ class BatchUpdateTests: ConsistencyManagerTestCase {
             addListener(listener, toConsistencyManager: consistencyManager)
 
             var numberOfUpdates = 0
-            listener.updateClosure = { _ in
+            listener.updateClosure = { _, _ in
                 numberOfUpdates += 1
             }
 

@@ -128,7 +128,7 @@ func ==(lhs: ProjectionTreeModel, rhs: ProjectionTreeModel) -> Bool {
 
 extension ProjectionTreeModel: CustomStringConvertible {
     var description: String {
-        return "\(id):\(data):\(otherData)|\(child)|\(otherChild)"
+        return "\(id):\(String(describing: data)):\(String(describing: otherData))|\(String(describing: child))|\(String(describing: otherChild))"
     }
 }
 

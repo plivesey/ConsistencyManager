@@ -92,7 +92,7 @@ func ==(lhs: ProjectionTestModel, rhs: ProjectionTestModel) -> Bool {
 
 extension ProjectionTestModel: CustomStringConvertible {
     var description: String {
-        return "\(id):\(data):\(otherData)-\(requiredModel)-\(children)"
+        return "\(String(describing: id)):\(String(describing: data)):\(String(describing: otherData))-\(requiredModel)-\(children)"
     }
 }
 

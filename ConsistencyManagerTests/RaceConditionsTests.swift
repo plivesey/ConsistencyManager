@@ -34,7 +34,7 @@ class RaceConditionsTests: ConsistencyManagerTestCase {
             let updateModel = TestModel(id: "0", data: 1, children: [], requiredModel: TestRequiredModel(id: nil, data: -1))
             let newModel = TestModel(id: "2", data: 2, children: [], requiredModel: TestRequiredModel(id: nil, data: -1))
 
-            listener.updateClosure = { context in
+            listener.updateClosure = { _, _ in
                 XCTFail()
             }
 

@@ -44,6 +44,6 @@ func ==(lhs: TestRequiredModel, rhs: TestRequiredModel) -> Bool {
 
 extension TestRequiredModel: CustomStringConvertible {
     var description: String {
-        return "\(id):\(data)"
+        return "\(String(describing: id)):\(data)"
     }
 }

@@ -217,7 +217,7 @@ class UpdateTests: ConsistencyManagerTestCase {
                         let consistencyManager = ConsistencyManager()
                         let listener = TestListener(model: testModel)
                         // We don't want to receive any updates
-                        listener.updateClosure = { _ in
+                        listener.updateClosure = { _, _ in
                             XCTFail()
                         }
 

@@ -104,7 +104,7 @@ class UpdateFlowTests: ConsistencyManagerTestCase {
         let additionalChild = TestModel(id: "200", data: 200, children: [], requiredModel: newRequiredModel)
         let originalChildUpdated = TestModel(id: "2", data: -2, children: [additionalChild], requiredModel: newRequiredModel)
         
-        listener.updateClosure = { _ in
+        listener.updateClosure = { _, _ in
             XCTFail()
         }
         

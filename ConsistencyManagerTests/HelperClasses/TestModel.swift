@@ -86,7 +86,7 @@ func ==(lhs: TestModel, rhs: TestModel) -> Bool {
 
 extension TestModel: CustomStringConvertible {
     var description: String {
-        return "\(id):\(data)-\(requiredModel)-\(children)"
+        return "\(String(describing: id)):\(String(describing: data))-\(requiredModel)-\(children)"
     }
 }
 
