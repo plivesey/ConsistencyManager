@@ -17,7 +17,7 @@ rm -rf $DERIVED_DATA &&
 time xcodebuild clean build \
     -project ConsistencyManager.xcodeproj \
     -scheme ConsistencyManager \
-    -sdk iphonesimulator11.0 \
+    -sdk iphonesimulator \
     -derivedDataPath $DERIVED_DATA \
     -destination 'platform=iOS Simulator,name=iPhone 6,OS=8.4' \
     -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.3' \
@@ -29,7 +29,7 @@ rm -rf $DERIVED_DATA &&
     time xcodebuild clean build \
     -project ConsistencyManager.xcodeproj \
     -scheme ConsistencyManager \
-    -sdk appletvsimulator10.0 \
+    -sdk appletvsimulator \
     -derivedDataPath $DERIVED_DATA \
     -destination 'platform=tvOS Simulator,name=Apple TV 1080p,OS=10.0' \
     | tee build.log \
