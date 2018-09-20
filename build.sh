@@ -21,8 +21,9 @@ time xcodebuild clean build \
     -derivedDataPath $DERIVED_DATA \
     -destination 'platform=iOS Simulator,name=iPhone 6,OS=8.4' \
     -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.3' \
-    -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.0' \
+    -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.1' \
     -destination 'platform=iOS Simulator,name=iPhone 8,OS=11.3' \
+    -destination 'platform=iOS Simulator,name=iPhone XS Max,OS=12.0' \
     | tee build.log \
     | xcpretty &&
 rm -rf $DERIVED_DATA &&
