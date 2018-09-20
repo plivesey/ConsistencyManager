@@ -48,9 +48,9 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             cell.delegate = self
             cell.idLabel.text = update.id
             if update.liked {
-                cell.button.setTitle("Unlike", for: UIControlState())
+                cell.button.setTitle("Unlike", for: UIControl.State())
             } else {
-                cell.button.setTitle("Like", for: UIControlState())
+                cell.button.setTitle("Like", for: UIControl.State())
             }
             return cell
         } else {

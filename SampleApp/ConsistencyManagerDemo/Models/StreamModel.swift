@@ -25,7 +25,7 @@ final class StreamModel: ConsistencyManagerModel, Equatable {
     }
 
     func map(_ transform: (ConsistencyManagerModel) -> ConsistencyManagerModel?) -> ConsistencyManagerModel? {
-        let newUpdates: [UpdateModel] = updates.flatMap { model in
+        let newUpdates: [UpdateModel] = updates.compactMap { model in
             return transform(model) as? UpdateModel
         }
         return StreamModel(id: id, updates: newUpdates)

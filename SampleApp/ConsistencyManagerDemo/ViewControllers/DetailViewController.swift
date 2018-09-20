@@ -38,9 +38,9 @@ class DetailViewController: UIViewController, ConsistencyManagerListener {
     func loadData() {
         likeButton.isHidden = false
         if update.liked {
-            likeButton.setTitle("Unlike", for: UIControlState())
+            likeButton.setTitle("Unlike", for: UIControl.State())
         } else {
-            likeButton.setTitle("Like", for: UIControlState())
+            likeButton.setTitle("Like", for: UIControl.State())
         }
     }
 
