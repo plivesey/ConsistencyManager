@@ -32,7 +32,7 @@ rm -rf $DERIVED_DATA &&
     -scheme ConsistencyManager \
     -sdk appletvsimulator \
     -derivedDataPath $DERIVED_DATA \
-    -destination 'platform=tvOS Simulator,name=Apple TV,OS=11.3' \
+    -destination 'platform=tvOS Simulator,name=Apple TV,OS=12.0' \
     | tee build.log \
     | xcpretty &&
 cat build.log
