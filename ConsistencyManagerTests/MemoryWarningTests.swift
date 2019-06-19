@@ -49,7 +49,7 @@ class MemoryWarningTests: ConsistencyManagerTestCase {
             XCTFail()
         }
 
-        NotificationCenter.default.post(name: NSNotification.Name.UIApplicationDidReceiveMemoryWarning, object: nil)
+        NotificationCenter.default.post(name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
         waitOnDispatchQueue(consistencyManager)
 
         // Now, listeners array should be 0 or nil
