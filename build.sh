@@ -23,7 +23,7 @@ time xcodebuild clean build \
     -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.3' \
     -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.1' \
     -destination 'platform=iOS Simulator,name=iPhone 8,OS=11.3' \
-    -destination 'platform=iOS Simulator,name=iPhone XS Max,OS=12.0' \
+    -destination 'platform=iOS Simulator,name=iPhone XS Max,OS=12.2' \
     | tee build.log \
     | xcpretty &&
 rm -rf $DERIVED_DATA &&
@@ -32,7 +32,7 @@ rm -rf $DERIVED_DATA &&
     -scheme ConsistencyManager \
     -sdk appletvsimulator \
     -derivedDataPath $DERIVED_DATA \
-    -destination 'platform=tvOS Simulator,name=Apple TV,OS=12.0' \
+    -destination 'platform=tvOS Simulator,name=Apple TV,OS=12.2' \
     | tee build.log \
     | xcpretty &&
 cat build.log
